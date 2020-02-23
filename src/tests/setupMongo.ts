@@ -1,0 +1,40 @@
+import { MongoClient } from 'mongodb';
+
+class SetupMongo {
+  private _client: MongoClient;
+  private _dbName: string;
+
+  get client() {
+    if (!this._client.isConnected()) {
+      throw new Error('Please wait for `connection()` on `beforeAll` hook');
+    }
+
+    return this._client;
+  }
+
+  get db() {
+    return this.client.db(this._dbName);
+  }
+
+  constructor(url: string, dbName: string) {
+    this._client = new MongoClient(url, { useUnifiedTopology: true });
+    this._dbName = dbName;
+  }
+
+  async connect() {
+    await this._client.connect();
+  }
+}
+
+export default function setupMongo() {
+  const url = process.env.MONGO_URL || 'mongodb://localhost:27017/';
+  const dbName = process.env.MONGO_DB_NAME;
+
+  if (!dbName) {
+    throw new Error(
+      'Please provide a `MONGO_DB_NAME` environment variable for testing',
+    );
+  }
+
+  return new SetupMongo(url, dbName);
+}
