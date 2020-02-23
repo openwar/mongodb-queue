@@ -1,0 +1,4 @@
+# ignore all files to make a whitelist instead
+*
+
+!dist/**

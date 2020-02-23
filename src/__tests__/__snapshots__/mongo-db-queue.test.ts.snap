@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mongodb-queue createIndexes should create indexes on collection 1`] = `
+Object {
+  "_id_": Array [
+    Array [
+      "_id",
+      1,
+    ],
+  ],
+}
+`;
+
+exports[`mongodb-queue createIndexes should create indexes on collection 2`] = `
+Object {
+  "_id_": Array [
+    Array [
+      "_id",
+      1,
+    ],
+  ],
+  "ack_1": Array [
+    Array [
+      "ack",
+      1,
+    ],
+  ],
+  "deleted_1_visible_1": Array [
+    Array [
+      "deleted",
+      1,
+    ],
+    Array [
+      "visible",
+      1,
+    ],
+  ],
+}
+`;
