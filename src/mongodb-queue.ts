@@ -36,9 +36,9 @@ type MessageSchema = {
 
 export type Message = {
   id: string;
-  ack: string | undefined;
+  ack: string;
   createdAt: Date;
-  updatedAt: Date | undefined;
+  updatedAt: Date;
   payload: any;
   tries: number;
 };
@@ -139,9 +139,9 @@ class MongoDbQueueImpl implements MongoDbQueue {
     // convert to an external representation
     return {
       id: message._id.toHexString(),
-      ack: message.ack,
+      ack: message.ack!, // this is set during the update above
       createdAt: message.createdAt,
-      updatedAt: message.updatedAt,
+      updatedAt: message.updatedAt!, // this is set during the update above
       payload: message.payload,
       tries: message.tries,
     };
