@@ -43,10 +43,10 @@ export type Message = {
   tries: number;
 };
 
-export interface MongoDbQueue {
+export interface MongoDbQueue<T = any> {
   createIndexes(): Promise<void>;
 
-  add(payload: any): Promise<string>;
+  add(payload: T): Promise<string>;
 
   get(options?: { visibility?: number }): Promise<Message | undefined>;
 
