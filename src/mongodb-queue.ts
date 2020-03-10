@@ -17,18 +17,18 @@ function id() {
 }
 
 function now() {
-  return new Date().toISOString();
+  return new Date();
 }
 
 function nowPlusSecs(secs: number) {
-  return new Date(Date.now() + secs * 1000).toISOString();
+  return new Date(Date.now() + secs * 1000);
 }
 
 type MessageSchema = {
   _id: ObjectId;
   createdAt: Date;
   updatedAt?: Date;
-  visible: string;
+  visible: Date;
   payload: any;
   ack?: string;
   tries: number;
