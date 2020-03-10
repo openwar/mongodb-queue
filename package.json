@@ -51,5 +51,10 @@
   },
   "lint-staged": {
     "*.{js,ts,css,md}": "prettier --write"
+  },
+  "standard-version": {
+    "scripts": {
+      "postchangelog": "prettier --write CHANGELOG.md"
+    }
   }
 }
