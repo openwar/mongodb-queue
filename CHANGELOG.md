@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+### [1.1.2](https://github.com/openwar/mongodb-queue/compare/v1.1.0...v1.1.2) (2020-03-10)
+
+### Bug Fixes
+
+- date fields in DB
+  ([b4d60ad](https://github.com/openwar/mongodb-queue/commit/b4d60ad33ff128266e82b4a736c38667fa54be83))
+
 ### [1.1.1](https://github.com/openwar/mongodb-queue/compare/v1.1.0...v1.1.1) (2020-03-10)
 
 ### Bug Fixes
