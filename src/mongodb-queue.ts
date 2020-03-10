@@ -229,10 +229,10 @@ class MongoDbQueueImpl implements MongoDbQueue {
   }
 }
 
-export default function mongoDbQueue(
+export default function mongoDbQueue<T = any>(
   db: Db,
   name: string,
   options: { visibility?: number } = {},
-): MongoDbQueue {
+): MongoDbQueue<T> {
   return new MongoDbQueueImpl(db, name, options);
 }
