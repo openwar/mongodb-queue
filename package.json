@@ -14,7 +14,7 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "rollup -c",
     "build": "yarn build:types && yarn build:js",
-    "prepublish": "yarn run build",
+    "prepare": "yarn run build",
     "test": "jest"
   },
   "devDependencies": {
