@@ -24,7 +24,7 @@ describe('mongodb-queue', () => {
   });
 
   it('should handle single round trip message', async () => {
-    const queue = mongoDbQueue(setupDb.db, queueName);
+    const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
     const messageId = await queue.add('test message');
 
@@ -50,7 +50,7 @@ describe('mongodb-queue', () => {
   });
 
   it('should not allow an message to be acknowledged twice', async () => {
-    const queue = mongoDbQueue(setupDb.db, queueName);
+    const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
     await queue.add('test message');
     const message = await queue.get();
@@ -62,7 +62,7 @@ describe('mongodb-queue', () => {
   });
 
   it('should retry messages', async () => {
-    const queue = mongoDbQueue(setupDb.db, queueName);
+    const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
     await queue.add('test message for retry');
 
@@ -94,7 +94,7 @@ describe('mongodb-queue', () => {
 
   describe('payloads', () => {
     it('should allow string', async () => {
-      const queue = mongoDbQueue(setupDb.db, queueName);
+      const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
       await queue.add('test message');
 
@@ -104,7 +104,7 @@ describe('mongodb-queue', () => {
     });
 
     it('should allow number', async () => {
-      const queue = mongoDbQueue(setupDb.db, queueName);
+      const queue = mongoDbQueue<number>(setupDb.db, queueName);
 
       await queue.add(12);
 
@@ -114,7 +114,7 @@ describe('mongodb-queue', () => {
     });
 
     it('should allow boolean', async () => {
-      const queue = mongoDbQueue(setupDb.db, queueName);
+      const queue = mongoDbQueue<boolean>(setupDb.db, queueName);
 
       await queue.add(false);
 
@@ -126,7 +126,9 @@ describe('mongodb-queue', () => {
     });
 
     it('should allow object', async () => {
-      const queue = mongoDbQueue(setupDb.db, queueName);
+      type Complex = { something: string };
+
+      const queue = mongoDbQueue<Complex>(setupDb.db, queueName);
 
       const payload = { something: 'complex' };
       await queue.add(payload);
@@ -138,7 +140,9 @@ describe('mongodb-queue', () => {
     });
 
     it('should allow array', async () => {
-      const queue = mongoDbQueue(setupDb.db, queueName);
+      type Complex = string | { test: string };
+
+      const queue = mongoDbQueue<Complex[]>(setupDb.db, queueName);
 
       const payload = ['test message', { test: 'message' }];
       await queue.add(payload);
@@ -156,7 +160,7 @@ describe('mongodb-queue', () => {
     });
 
     it('should create indexes on collection', async () => {
-      const queue = mongoDbQueue(setupDb.db, queueName);
+      const queue = mongoDbQueue<string>(setupDb.db, queueName);
       // create an message to make sure collection exists in the system
       await queue.add('test message');
 
@@ -176,7 +180,7 @@ describe('mongodb-queue', () => {
     const total = 25;
 
     it('should handle multiple parallel processes', async () => {
-      const queue = mongoDbQueue(setupDb.db, queueName);
+      const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
       const messageIdPromises = [];
 
@@ -200,7 +204,7 @@ describe('mongodb-queue', () => {
     });
 
     it('should show correct stats based on current state', async () => {
-      const queue = mongoDbQueue(setupDb.db, queueName);
+      const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
       const messageIdPromises = [];
 

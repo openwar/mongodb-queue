@@ -34,12 +34,12 @@ type MessageSchema = {
   tries: number;
 };
 
-export type Message = {
+export type Message<T = any> = {
   id: string;
   ack: string;
   createdAt: Date;
   updatedAt: Date;
-  payload: any;
+  payload: T;
   tries: number;
 };
 
@@ -48,7 +48,7 @@ export interface MongoDbQueue<T = any> {
 
   add(payload: T): Promise<string>;
 
-  get(options?: { visibility?: number }): Promise<Message | undefined>;
+  get(options?: { visibility?: number }): Promise<Message<T> | undefined>;
 
   ping(ack: string, options?: { visibility?: number }): Promise<string>;
 
@@ -63,7 +63,7 @@ export interface MongoDbQueue<T = any> {
   done(): Promise<number>;
 }
 
-class MongoDbQueueImpl implements MongoDbQueue {
+class MongoDbQueueImpl<T = any> implements MongoDbQueue {
   private _db: Db;
   private _name: string;
   private _visibility: number;
@@ -93,7 +93,7 @@ class MongoDbQueueImpl implements MongoDbQueue {
     );
   }
 
-  async add(payload: any): Promise<string> {
+  async add(payload: T): Promise<string> {
     const visible = now();
 
     const results = await this.collection.insertOne({
@@ -106,9 +106,9 @@ class MongoDbQueueImpl implements MongoDbQueue {
     return results.ops[0]._id.toHexString();
   }
 
-  async get(
+  async get<T>(
     options: { visibility?: number } = {},
-  ): Promise<Message | undefined> {
+  ): Promise<Message<T> | undefined> {
     const visibility = options.visibility || this._visibility;
     const query = {
       deleted: null,
@@ -234,5 +234,5 @@ export default function mongoDbQueue<T = any>(
   name: string,
   options: { visibility?: number } = {},
 ): MongoDbQueue<T> {
-  return new MongoDbQueueImpl(db, name, options);
+  return new MongoDbQueueImpl<T>(db, name, options);
 }
