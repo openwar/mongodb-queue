@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [1.3.0](https://github.com/openwar/mongodb-queue/compare/v1.2.0...v1.3.0) (2020-03-21)
+
+### Features
+
+- support duplicate message check
+  ([f38a35b](https://github.com/openwar/mongodb-queue/commit/f38a35b078f9e3b45dd51a5b174a693230c28e00))
+
 ## [1.2.0](https://github.com/openwar/mongodb-queue/compare/v1.1.4...v1.2.0) (2020-03-21)
 
 ### Features
