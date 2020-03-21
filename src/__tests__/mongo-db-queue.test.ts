@@ -43,6 +43,7 @@ describe('mongodb-queue', () => {
     expect(message.tries).toBeDefined();
     expect(typeof message.tries).toBe('number');
     expect(message.tries).toBe(1);
+    expect(message.occurrences).toBe(1);
     expect(message.payload).toBe('test message');
 
     const id = await queue.ack(message.ack);
@@ -152,6 +153,98 @@ describe('mongodb-queue', () => {
       expect(message.payload).toEqual(['test message', { test: 'message' }]);
       expect(message.payload).not.toBe(payload);
     });
+  });
+
+  describe('duplicated messages', () => {
+    it.each`
+      value
+      ${'test message'}
+      ${''}
+    `(
+      'should allow string - `$value`',
+      async ({ value }: { value: string }) => {
+        const queue = mongoDbQueue<string>(setupDb.db, queueName);
+
+        const payload = value;
+
+        const messageId1 = await queue.add(payload, payload);
+        const messageId2 = await queue.add(payload, payload);
+
+        expect(messageId1).toBeDefined();
+        expect(messageId2).toBeDefined();
+        expect(messageId2).toBe(messageId1);
+        expect((await queue.get()).occurrences).toBe(2);
+        expect(await queue.size()).toBe(0);
+      },
+    );
+
+    it.each`
+      value
+      ${0}
+      ${10}
+      ${-20}
+    `(
+      'should allow number - `$value`',
+      async ({ value }: { value: number }) => {
+        const queue = mongoDbQueue<number>(setupDb.db, queueName);
+
+        const payload = value;
+
+        const messageId1 = await queue.add(payload, payload);
+        const messageId2 = await queue.add(payload, payload);
+
+        expect(messageId1).toBeDefined();
+        expect(messageId2).toBeDefined();
+        expect(messageId2).toBe(messageId1);
+        expect((await queue.get()).occurrences).toBe(2);
+        expect(await queue.size()).toBe(0);
+      },
+    );
+
+    it.each`
+      value
+      ${true}
+      ${false}
+    `(
+      'should allow boolean - `$value`',
+      async ({ value }: { value: boolean }) => {
+        const queue = mongoDbQueue<boolean>(setupDb.db, queueName);
+
+        const payload = value;
+
+        const messageId1 = await queue.add(payload, payload);
+        const messageId2 = await queue.add(payload, payload);
+
+        expect(messageId1).toBeDefined();
+        expect(messageId2).toBeDefined();
+        expect(messageId2).toBe(messageId1);
+        expect((await queue.get()).occurrences).toBe(2);
+        expect(await queue.size()).toBe(0);
+      },
+    );
+
+    it.each`
+      value                                | hashKey
+      ${{ something: 'complex' }}          | ${'something'}
+      ${{ id: 'id1', value: 'something' }} | ${'id1'}
+      ${{ id: 'id2', value: 'something' }} | ${'value'}
+    `(
+      'should allow object - `$value` : `$hashKey`',
+      async ({ value, hashKey }) => {
+        const queue = mongoDbQueue(setupDb.db, queueName);
+
+        const payload = value;
+
+        const messageId1 = await queue.add(payload, hashKey);
+        const messageId2 = await queue.add(payload, hashKey);
+
+        expect(messageId1).toBeDefined();
+        expect(messageId2).toBeDefined();
+        expect(messageId2).toBe(messageId1);
+        expect((await queue.get()).occurrences).toBe(2);
+        expect(await queue.size()).toBe(0);
+      },
+    );
   });
 
   describe('createIndexes', () => {

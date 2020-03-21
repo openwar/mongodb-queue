@@ -174,6 +174,61 @@ const id = await queue.add(['msg1', 'msg2', 'msg3']);
 // 'id' is returned, useful for logging.
 ```
 
+In case your messages can be duplicated (like events that occur multiple times
+in a short period), you can use the optional `hashKey` parameter to prevent this
+event from being duplicated in the queue. This is extremely useful if you are
+doing notifications or handling events from external sources (like webhooks).
+
+```js
+const payload = { id: 'msg1', msg: 'Possible duplicated message' };
+const id1 = await queue.add(payload, 'id');
+const id2 = await queue.add(payload, 'id');
+// Only one Message with `payload` added.
+// 'id1' is the same as 'id2', and it is useful for logging.
+```
+
+In case your message doesn't have an idempotent key, you can easily generate one
+and append it to your payload.
+
+```js
+import crypto from 'crypto';
+
+const payload = { id: 'msg1', msg: 'Possible duplicated message' };
+const hash = crypto
+  .createHash('sha1')
+  .update(JSON.stringify(payload))
+  .digest('hex');
+
+const hash = crypto.createHash('sha1');
+const id1 = await queue.add({ ...payload, hash }, 'hash');
+const id2 = await queue.add({ ...payload, hash }, 'hash');
+// Only one Message with `payload` added.
+// 'id1' is the same as 'id2', and it is useful for logging.
+```
+
+In case your messages are just list of ids that should be unique (e.g: users to
+process based on some event based queue), you can easily pass the payload as the
+`hashKey`.
+
+```js
+const payload = 'some-unique-id';
+const id1 = await queue.add(payload, payload);
+const id2 = await queue.add(payload, payload);
+// Only one Message with `payload` added.
+// 'id1' is the same as 'id2', and it is useful for logging.
+```
+
+It will also work with numbers for those of you that still use integers/longs
+for ids.
+
+```js
+const payload = 123456789;
+const id1 = await queue.add(payload, payload);
+const id2 = await queue.add(payload, payload);
+// Only one Message with `payload` added.
+// 'id1' is the same as 'id2', and it is useful for logging.
+```
+
 ### .get()
 
 Retrieve a message from the queue:

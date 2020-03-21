@@ -7,7 +7,7 @@
  */
 
 import crypto from 'crypto';
-import type { Db, ObjectId, UpdateQuery } from 'mongodb';
+import type { Db, ObjectId, UpdateQuery, FilterQuery } from 'mongodb';
 
 // some helper functions
 function id() {
@@ -30,6 +30,7 @@ type MessageSchema = {
   payload: any;
   ack?: string;
   tries: number;
+  occurrences?: number;
 };
 
 export type Message<T = any> = {
@@ -39,12 +40,13 @@ export type Message<T = any> = {
   updatedAt: Date;
   payload: T;
   tries: number;
+  occurrences?: number;
 };
 
 export interface MongoDbQueue<T = any> {
   createIndexes(): Promise<void>;
 
-  add(payload: T): Promise<string>;
+  add(payload: T, hashKey?: keyof T | T): Promise<string>;
 
   get(options?: { visibility?: number }): Promise<Message<T> | undefined>;
 
@@ -91,17 +93,50 @@ class MongoDbQueueImpl<T = any> implements MongoDbQueue {
     );
   }
 
-  async add(payload: T): Promise<string> {
-    const visible = now();
+  async add(payload: T, hashKey?: keyof T | T): Promise<string> {
+    const now = new Date();
 
-    const results = await this.collection.insertOne({
-      createdAt: new Date(),
-      visible,
+    const insertFields = {
+      createdAt: now,
+      visible: now,
       payload,
       tries: 0,
-    });
+    };
 
-    return results.ops[0]._id.toHexString();
+    if (hashKey === undefined) {
+      const result = await this.collection.insertOne({
+        ...insertFields,
+        occurrences: 1,
+      });
+
+      return result.ops[0]._id.toHexString();
+    }
+
+    let filter: FilterQuery<MessageSchema> = {
+      payload: { $eq: hashKey },
+    };
+
+    if (typeof payload === 'object') {
+      filter = {
+        [`payload.${hashKey}`]: payload[hashKey as keyof T],
+      };
+    }
+
+    const result = await this.collection.findOneAndUpdate(
+      filter,
+      {
+        $inc: { occurrences: 1 },
+        $set: {
+          updatedAt: new Date(),
+        },
+        $setOnInsert: insertFields,
+      },
+      { upsert: true, returnOriginal: false },
+    );
+
+    // value is always defined because it is an `upsert`
+    const message = result.value!;
+    return message._id.toHexString();
   }
 
   async get<T>(
@@ -142,6 +177,7 @@ class MongoDbQueueImpl<T = any> implements MongoDbQueue {
       updatedAt: message.updatedAt!, // this is set during the update above
       payload: message.payload,
       tries: message.tries,
+      occurrences: message.occurrences ?? 1,
     };
   }
 
