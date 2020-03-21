@@ -6,10 +6,8 @@
  * file that was distributed with this source code.
  */
 
-// TODO @fguerra use `import type` once babel supports typescript 3.8:
-// https://github.com/babel/babel/issues/10981
-import { Db, ObjectId, UpdateQuery } from 'mongodb';
 import crypto from 'crypto';
+import type { Db, ObjectId, UpdateQuery } from 'mongodb';
 
 // some helper functions
 function id() {
