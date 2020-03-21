@@ -14,14 +14,6 @@ function id() {
   return crypto.randomBytes(16).toString('hex');
 }
 
-function now() {
-  return new Date();
-}
-
-function nowPlusSecs(secs: number) {
-  return new Date(Date.now() + secs * 1000);
-}
-
 type MessageSchema = {
   _id: ObjectId;
   createdAt: Date;
@@ -143,9 +135,12 @@ class MongoDbQueueImpl<T = any> implements MongoDbQueue {
     options: { visibility?: number } = {},
   ): Promise<Message<T> | undefined> {
     const visibility = options.visibility || this._visibility;
+
+    const now = Date.now();
+
     const query = {
       deleted: null,
-      visible: { $lte: now() },
+      visible: { $lte: new Date(now) },
     };
     const sort = {
       _id: 1,
@@ -153,9 +148,9 @@ class MongoDbQueueImpl<T = any> implements MongoDbQueue {
     const update: UpdateQuery<MessageSchema> = {
       $inc: { tries: 1 },
       $set: {
-        updatedAt: new Date(),
+        updatedAt: new Date(now),
         ack: id(),
-        visible: nowPlusSecs(visibility),
+        visible: new Date(now + visibility * 1000),
       },
     };
 
@@ -185,15 +180,17 @@ class MongoDbQueueImpl<T = any> implements MongoDbQueue {
     ack: string,
     options: { visibility?: number } = {},
   ): Promise<string> {
+    const now = Date.now();
+
     const visibility = options.visibility || this._visibility;
     const query = {
       ack: ack,
-      visible: { $gt: now() },
+      visible: { $gt: new Date(now) },
       deleted: null,
     };
     const update = {
       $set: {
-        visible: nowPlusSecs(visibility),
+        visible: new Date(now + visibility * 1000),
       },
     };
 
@@ -209,14 +206,15 @@ class MongoDbQueueImpl<T = any> implements MongoDbQueue {
   }
 
   async ack(ack: string): Promise<string> {
+    const now = Date.now();
     const query = {
       ack: ack,
-      visible: { $gt: now() },
+      visible: { $gt: new Date(now) },
       deleted: null,
     };
     const update = {
       $set: {
-        deleted: now(),
+        deleted: new Date(now),
       },
     };
 
@@ -238,7 +236,7 @@ class MongoDbQueueImpl<T = any> implements MongoDbQueue {
   async size() {
     const query = {
       deleted: null,
-      visible: { $lte: now() },
+      visible: { $lte: new Date() },
     };
 
     return await this.collection.countDocuments(query);
@@ -247,7 +245,7 @@ class MongoDbQueueImpl<T = any> implements MongoDbQueue {
   async inFlight() {
     const query = {
       ack: { $exists: true },
-      visible: { $gt: now() },
+      visible: { $gt: new Date() },
       deleted: null,
     };
 
