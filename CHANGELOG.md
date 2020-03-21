@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [1.2.0](https://github.com/openwar/mongodb-queue/compare/v1.1.4...v1.2.0) (2020-03-21)
+
+### Features
+
+- better typescript support for payload
+  ([035164f](https://github.com/openwar/mongodb-queue/commit/035164fd777b88b4350fb1e592e65f76819bd499))
+
 ### [1.1.4](https://github.com/openwar/mongodb-queue/compare/v1.1.3...v1.1.4) (2020-03-10)
 
 ### Bug Fixes
