@@ -43,7 +43,7 @@ const queue = mongoDbQueue(db, 'my-queue');
 Add a message to a queue:
 
 ```js
-const id = await queue.add('Hello World!'
+const id = await queue.add('Hello World!');
 // Message with payload 'Hello World!' added.
 // 'id' is returned, useful for logging.
 ```
@@ -61,7 +61,7 @@ console.log('msg.tries %d', msg.tries);
 Ping a message to keep its visibility open for long-running tasks:
 
 ```js
-const id = await queue.ping(msg.ack,
+const id = await queue.ping(msg.ack);
 // Visibility window now increased for this message id.
 // 'id' is returned, useful for logging.
 ```
@@ -162,7 +162,7 @@ Or add an object of your choosing:
 
 ```js
 const id = await queue.add({ err: 'E_BORKED', msg: 'Broken' });
-// Message with payload { err: 'E_BORKED', msg: 'Broken' } added.
+// Message with payload `{ err: 'E_BORKED', msg: 'Broken' }` added.
 // 'id' is returned, useful for logging.
 ```
 
@@ -170,7 +170,7 @@ Or add array as a message:
 
 ```js
 const id = await queue.add(['msg1', 'msg2', 'msg3']);
-// Messages with payload ['msg1', 'msg2', 'msg3'] added.
+// Message with payload `['msg1', 'msg2', 'msg3']` added.
 // 'id' is returned, useful for logging.
 ```
 
