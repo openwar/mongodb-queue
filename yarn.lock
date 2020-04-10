@@ -1214,9 +1214,9 @@
     pretty-format "^25.1.0"
 
 "@types/mongodb@^3.5.2":
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.2.tgz#2d815ebb9de9019dd12eb72e8ed1a5121619bf0a"
-  integrity sha512-/p4+HjfQqmNtq88rlLJ9XgUROhmbdUEU0yeVPCPIt8/vA1fSO1dSjwsRcGNaGuPMUSDRuRm8tDlXeGpWUVF71w==
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.5.tgz#eaf5e521500406bad37c887c4a9ce6c8cbfb498b"
+  integrity sha512-iIWBu740IPolqzpYUBdQs1T4LMiJv1CIIcJb6gX2mGtb/VmnFWONSiyUG+lJF4IUg+QEuIqpalW3eshiTCc8dQ==
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
