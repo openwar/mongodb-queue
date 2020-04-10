@@ -1,0 +1,17 @@
+version: 1
+update_configs:
+  - package_manager: "javascript"
+    directory: "/"
+    update_schedule: "live"
+    default_assignees:
+      - "alias-mac"
+    default_reviewers:
+      - "alias-mac"
+    automerged_updates:
+      - match:
+          dependency_type: "development"
+          update_type: "all"
+    commit_message:
+      prefix: "fix"
+      prefix_development: "chore"
+      include_scope: true
