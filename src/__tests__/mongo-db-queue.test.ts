@@ -37,9 +37,9 @@ describe('mongodb-queue', () => {
     expect(message.ack).toBeDefined();
     expect(typeof message.ack).toBe('string');
     expect(message.createdAt).toBeDefined();
-    expect(message.createdAt instanceof Date).toBeTruthy();
+    expect(message.createdAt).toBeInstanceOf(Date);
     expect(message.updatedAt).toBeDefined();
-    expect(message.updatedAt instanceof Date).toBeTruthy();
+    expect(message.updatedAt).toBeInstanceOf(Date);
     expect(message.tries).toBeDefined();
     expect(typeof message.tries).toBe('number');
     expect(message.tries).toBe(1);
