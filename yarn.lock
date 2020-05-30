@@ -1306,9 +1306,9 @@
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
 "@types/mongodb@^3.5.2":
-  version "3.5.18"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.18.tgz#79b1b8119e035980a4b4412239e0d05b367ec647"
-  integrity sha512-fEmnRmwXt4pEFhqWB/ZlyNaDhLfQv5GALaZAlH9Pb0kEttvsCr66umJ9pfBEEP3ks1hjlwAuMtqk/+DyZDLAXQ==
+  version "3.5.19"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.19.tgz#076c6fa5a1fedc1672a4142301f06de0ccc224b9"
+  integrity sha512-CzcWhcvEvZqKAnVBkoBeMkHWbxW3g2u297BYVdElyMCzjLX9K+IGzKS3zNvxvdr+pFZO9PtXZMGX7SsVTZc83g==
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
