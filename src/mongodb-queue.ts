@@ -114,7 +114,7 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
       };
     }
 
-    const result = await this.collection.findOneAndUpdate(
+    const message = await this.collection.findOneAndUpdate(
       filter,
       {
         $inc: { occurrences: 1 },
@@ -126,9 +126,11 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
       { upsert: true, returnOriginal: false },
     );
 
-    // value is always defined because it is an `upsert`
-    const message = result.value!;
-    return message._id.toHexString();
+    if (!message.value) {
+      throw new Error(`Queue.add(): Failed add message`);
+    }
+
+    return message.value._id.toHexString();
   }
 
   async get<T>(
@@ -164,12 +166,16 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
     // nothing in the queue
     if (!message) return;
 
+    if (!message.ack || !message.updatedAt) {
+      throw new Error(`Queue.get(): Failed to update message`);
+    }
+
     // convert to an external representation
     return {
       id: message._id.toHexString(),
-      ack: message.ack!, // this is set during the update above
+      ack: message.ack,
       createdAt: message.createdAt,
-      updatedAt: message.updatedAt!, // this is set during the update above
+      updatedAt: message.updatedAt,
       payload: message.payload as T,
       tries: message.tries,
       occurrences: message.occurrences ?? 1,
