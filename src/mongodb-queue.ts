@@ -19,13 +19,13 @@ type MessageSchema = {
   createdAt: Date;
   updatedAt?: Date;
   visible: Date;
-  payload: any;
+  payload: unknown;
   ack?: string;
   tries: number;
   occurrences?: number;
 };
 
-export type Message<T = any> = {
+export type Message<T = unknown> = {
   id: string;
   ack: string;
   createdAt: Date;
@@ -35,7 +35,7 @@ export type Message<T = any> = {
   occurrences?: number;
 };
 
-export interface MongoDbQueue<T = any> {
+export interface MongoDbQueue<T = unknown> {
   createIndexes(): Promise<void>;
 
   add(payload: T, hashKey?: keyof T | T): Promise<string>;
@@ -55,7 +55,7 @@ export interface MongoDbQueue<T = any> {
   done(): Promise<number>;
 }
 
-class MongoDbQueueImpl<T = any> implements MongoDbQueue {
+class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
   private _db: Db;
   private _name: string;
   private _visibility: number;
@@ -170,7 +170,7 @@ class MongoDbQueueImpl<T = any> implements MongoDbQueue {
       ack: message.ack!, // this is set during the update above
       createdAt: message.createdAt,
       updatedAt: message.updatedAt!, // this is set during the update above
-      payload: message.payload,
+      payload: message.payload as T,
       tries: message.tries,
       occurrences: message.occurrences ?? 1,
     };
@@ -261,7 +261,7 @@ class MongoDbQueueImpl<T = any> implements MongoDbQueue {
   }
 }
 
-export default function mongoDbQueue<T = any>(
+export default function mongoDbQueue<T = unknown>(
   db: Db,
   name: string,
   options: { visibility?: number } = {},
