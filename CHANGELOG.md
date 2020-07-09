@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [1.4.0](https://github.com/openwar/mongodb-queue/compare/v1.3.2...v1.4.0) (2020-07-09)
+
+### Features
+
+- throw when add/get returns unexpected data
+  ([370d786](https://github.com/openwar/mongodb-queue/commit/370d78633e00a353fd1132899db262321b29de63))
+- **types:** payload as `unknown`
+  ([2fc7d74](https://github.com/openwar/mongodb-queue/commit/2fc7d7440a46ae9b464d30f01448559e61baae11))
+
 ### [1.3.2](https://github.com/openwar/mongodb-queue/compare/v1.3.1...v1.3.2) (2020-05-23)
 
 ### [1.3.1](https://github.com/openwar/mongodb-queue/compare/v1.3.0...v1.3.1) (2020-03-21)
