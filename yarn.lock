@@ -847,7 +847,7 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@commitlint/cli@^9.0.1":
+"@commitlint/cli@^9.0.1", "@commitlint/cli@^9.1.0":
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-9.1.1.tgz#24277e6c1e616191a34a7182a1d3e73369a34f98"
   integrity sha512-ye9vUZz8Niv77e5ecBWnA2PnuPF+vYy/3BfSZx8sEaNjozJWUolTk/fuqTsoij3bseZBVObd+cVqZgGk8lfEdw==
@@ -1996,11 +1996,11 @@ commander@^5.1.0:
   integrity sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==
 
 commitlint@^9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/commitlint/-/commitlint-9.0.1.tgz#eef3e4c44d58be8de697a078c74bd24c782b5685"
-  integrity sha512-f4naT91tq+bouOnEPjP2x9qNIje8h8XI0dhPopx7/a0pHg4OYvVpImUrvHrjw4Gd0quRFcKP3TsUsC9AiK9V9A==
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/commitlint/-/commitlint-9.1.0.tgz#86fa5f3b4eaefa31dcc035faaf4695a9a144e76e"
+  integrity sha512-ZCMwt116JfKjiIsm1rivqveNnqA3Kkwk8FIwoUws+LuVKo3CDVcowXMX/dJVACPMErLGO16uB5U2VIe5hjmCKw==
   dependencies:
-    "@commitlint/cli" "^9.0.1"
+    "@commitlint/cli" "^9.1.0"
 
 compare-func@^1.3.1:
   version "1.3.4"
