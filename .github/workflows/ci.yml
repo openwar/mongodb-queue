@@ -33,9 +33,13 @@ jobs:
         node-version: [12.x, 13.x]
         mongodb-version: ['4.0', '4.2']
 
+    env:
+      NODE: ${{ matrix.node-version }}
+      MONGO: ${{ matrix.mongodb-version }}
+
     services:
       mongodb:
-        image: mongo:${{matrix.mongodb-version}}
+        image: mongo:${{ matrix.mongodb-version }}
         ports:
         - 27017:27017
 
@@ -58,4 +62,5 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+        env_vars: NODE,MONGO
         fail_ci_if_error: true
