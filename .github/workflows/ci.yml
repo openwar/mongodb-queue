@@ -32,7 +32,7 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [12.x, 13.x, 14.x]
-        mongodb-version: ['4.0', '4.2']
+        mongodb-version: ['4.0', '4.2', '4.4']
 
     env:
       NODE: ${{ matrix.node-version }}
