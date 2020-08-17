@@ -43,7 +43,7 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.3",
-    "standard-version": "^8.0.0",
+    "standard-version": "^9.0.0",
     "typescript": "^3.9.6"
   },
   "engines": {
