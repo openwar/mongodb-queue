@@ -36,10 +36,12 @@ describe('mongodb-queue', () => {
 
       await sleep(2000);
 
+      // @ts-expect-error check is defined above
       await queue.ping(message.ack);
 
       await sleep(2000);
 
+      // @ts-expect-error check is defined above
       await queue.ack(message.ack);
     }, 10000);
 
@@ -54,8 +56,10 @@ describe('mongodb-queue', () => {
 
       expect(message).toBeDefined();
 
+      // @ts-expect-error check is defined above
       await queue.ack(message.ack);
 
+      // @ts-expect-error check is defined above
       expect(queue.ping(message.ack)).rejects.toThrow(
         /Queue.ping\(\): Unidentified ack : (.+)/,
       );
@@ -74,10 +78,12 @@ describe('mongodb-queue', () => {
 
       await sleep(1000);
 
+      // @ts-expect-error check is defined above
       await queue.ping(message.ack, { visibility: 5 });
 
       await sleep(3000);
 
+      // @ts-expect-error check is defined above
       await queue.ack(message.ack);
     }, 10000);
   });

@@ -33,20 +33,23 @@ describe('mongodb-queue', () => {
 
     const message = await queue.get();
 
-    expect(message.id).toBeDefined();
-    expect(typeof message.id).toBe('string');
-    expect(message.ack).toBeDefined();
-    expect(typeof message.ack).toBe('string');
-    expect(message.createdAt).toBeDefined();
-    expect(message.createdAt).toBeInstanceOf(Date);
-    expect(message.updatedAt).toBeDefined();
-    expect(message.updatedAt).toBeInstanceOf(Date);
-    expect(message.tries).toBeDefined();
-    expect(typeof message.tries).toBe('number');
-    expect(message.tries).toBe(1);
-    expect(message.occurrences).toBe(1);
-    expect(message.payload).toBe('test message');
+    expect(message).toBeDefined();
+    expect(message?.id).toBeDefined();
+    expect(typeof message?.id).toBe('string');
+    expect(message?.id).toBe(messageId);
+    expect(message?.ack).toBeDefined();
+    expect(typeof message?.ack).toBe('string');
+    expect(message?.createdAt).toBeDefined();
+    expect(message?.createdAt).toBeInstanceOf(Date);
+    expect(message?.updatedAt).toBeDefined();
+    expect(message?.updatedAt).toBeInstanceOf(Date);
+    expect(message?.tries).toBeDefined();
+    expect(typeof message?.tries).toBe('number');
+    expect(message?.tries).toBe(1);
+    expect(message?.occurrences).toBe(1);
+    expect(message?.payload).toBe('test message');
 
+    // @ts-expect-error check is defined above
     const id = await queue.ack(message.ack);
     expect(id).toBeDefined();
   });
@@ -56,8 +59,13 @@ describe('mongodb-queue', () => {
 
     await queue.add('test message');
     const message = await queue.get();
+
+    expect(message).toBeDefined();
+
+    // @ts-expect-error check is defined above
     await queue.ack(message.ack);
 
+    // @ts-expect-error check is defined above
     await expect(queue.ack(message.ack)).rejects.toThrow(
       /^Queue.ack\(\): Unidentified ack : (.+)$/,
     );
@@ -70,17 +78,22 @@ describe('mongodb-queue', () => {
 
     const messageToIgnore = await queue.get({ visibility: 1 });
 
+    expect(messageToIgnore).toBeDefined();
+
     await sleep(1500);
 
     const message = await queue.get();
 
-    expect(messageToIgnore.tries).toBe(1);
-    expect(message.tries).toBe(2);
+    expect(message).toBeDefined();
 
-    expect(message.id).toBe(messageToIgnore.id);
-    expect(message.payload).toBe('test message for retry');
-    expect(message.payload).toBe(messageToIgnore.payload);
+    expect(messageToIgnore?.tries).toBe(1);
+    expect(message?.tries).toBe(2);
 
+    expect(message?.id).toBe(messageToIgnore?.id);
+    expect(message?.payload).toBe('test message for retry');
+    expect(message?.payload).toBe(messageToIgnore?.payload);
+
+    // @ts-expect-error check is defined above
     const id = await queue.ack(message.ack);
 
     expect(id).toBeDefined();
@@ -111,7 +124,7 @@ describe('mongodb-queue', () => {
 
       const message = await queue.get();
 
-      expect(message.payload).toEqual('test message');
+      expect(message?.payload).toEqual('test message');
     });
 
     it('should allow number', async () => {
@@ -121,7 +134,7 @@ describe('mongodb-queue', () => {
 
       const message = await queue.get();
 
-      expect(message.payload).toEqual(12);
+      expect(message?.payload).toEqual(12);
     });
 
     it('should allow boolean', async () => {
@@ -129,11 +142,11 @@ describe('mongodb-queue', () => {
 
       await queue.add(false);
 
-      expect((await queue.get()).payload).toEqual(false);
+      expect((await queue.get())?.payload).toEqual(false);
 
       await queue.add(true);
 
-      expect((await queue.get()).payload).toEqual(true);
+      expect((await queue.get())?.payload).toEqual(true);
     });
 
     it('should allow object', async () => {
@@ -146,8 +159,8 @@ describe('mongodb-queue', () => {
 
       const message = await queue.get();
 
-      expect(message.payload).toEqual({ something: 'complex' });
-      expect(message.payload).not.toBe(payload);
+      expect(message?.payload).toEqual({ something: 'complex' });
+      expect(message?.payload).not.toBe(payload);
     });
 
     it('should allow array', async () => {
@@ -160,8 +173,8 @@ describe('mongodb-queue', () => {
 
       const message = await queue.get();
 
-      expect(message.payload).toEqual(['test message', { test: 'message' }]);
-      expect(message.payload).not.toBe(payload);
+      expect(message?.payload).toEqual(['test message', { test: 'message' }]);
+      expect(message?.payload).not.toBe(payload);
     });
   });
 
@@ -183,7 +196,7 @@ describe('mongodb-queue', () => {
         expect(messageId1).toBeDefined();
         expect(messageId2).toBeDefined();
         expect(messageId2).toBe(messageId1);
-        expect((await queue.get()).occurrences).toBe(2);
+        expect((await queue.get())?.occurrences).toBe(2);
         expect(await queue.size()).toBe(0);
       },
     );
@@ -206,7 +219,7 @@ describe('mongodb-queue', () => {
         expect(messageId1).toBeDefined();
         expect(messageId2).toBeDefined();
         expect(messageId2).toBe(messageId1);
-        expect((await queue.get()).occurrences).toBe(2);
+        expect((await queue.get())?.occurrences).toBe(2);
         expect(await queue.size()).toBe(0);
       },
     );
@@ -228,7 +241,7 @@ describe('mongodb-queue', () => {
         expect(messageId1).toBeDefined();
         expect(messageId2).toBeDefined();
         expect(messageId2).toBe(messageId1);
-        expect((await queue.get()).occurrences).toBe(2);
+        expect((await queue.get())?.occurrences).toBe(2);
         expect(await queue.size()).toBe(0);
       },
     );
@@ -251,7 +264,7 @@ describe('mongodb-queue', () => {
         expect(messageId1).toBeDefined();
         expect(messageId2).toBeDefined();
         expect(messageId2).toBe(messageId1);
-        expect((await queue.get()).occurrences).toBe(2);
+        expect((await queue.get())?.occurrences).toBe(2);
         expect(await queue.size()).toBe(0);
       },
     );
@@ -302,6 +315,7 @@ describe('mongodb-queue', () => {
       expect(messages).toHaveLength(total);
 
       await Promise.all(
+        // @ts-expect-error check is defined above
         messages.map(async (message) => await queue.ack(message.ack)),
       );
     });
@@ -334,6 +348,7 @@ describe('mongodb-queue', () => {
       expect(await queue.done()).toBe(0);
 
       await Promise.all(
+        // @ts-expect-error check is defined above
         messages.map(async (message) => await queue.ack(message.ack)),
       );
 
