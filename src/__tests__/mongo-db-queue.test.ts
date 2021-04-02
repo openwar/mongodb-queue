@@ -87,7 +87,18 @@ describe('mongodb-queue', () => {
     expect(id).toBeDefined();
   });
 
+  it('should throw when not passing a db', () => {
+    // @ts-expect-error testing without required db param
+    expect(() => mongoDbQueue()).toThrow(
+      /^Please provide a mongodb.MongoClient.db$/,
+    );
+  });
+
   it('should throw when not passing a valid queue name', () => {
+    // @ts-expect-error testing without required queue name param
+    expect(() => mongoDbQueue(setupDb.db)).toThrow(
+      /^Please provide a queue name$/,
+    );
     expect(() => mongoDbQueue(setupDb.db, '')).toThrow(
       /^Please provide a queue name$/,
     );
