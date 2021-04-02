@@ -18,13 +18,13 @@ describe('mongodb-queue', () => {
     await setupDb.client?.close();
   });
 
-  it('should return `undefined` when getting a message from empty queue', async () => {
+  it('returns `undefined` when getting a message from empty queue', async () => {
     const queue = mongoDbQueue(setupDb.db, queueName);
 
     expect(await queue.get()).toBeUndefined();
   });
 
-  it('should handle single round trip message', async () => {
+  it('handles single round trip message', async () => {
     const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
     const messageId = await queue.add('test message');
@@ -54,7 +54,7 @@ describe('mongodb-queue', () => {
     expect(id).toBeDefined();
   });
 
-  it('should not allow an message to be acknowledged twice', async () => {
+  it('does not allow an message to be acknowledged twice', async () => {
     const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
     await queue.add('test message');
@@ -71,7 +71,7 @@ describe('mongodb-queue', () => {
     );
   });
 
-  it('should retry messages', async () => {
+  it('allows retrying not acknowledged messages', async () => {
     const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
     await queue.add('test message for retry');
@@ -99,14 +99,14 @@ describe('mongodb-queue', () => {
     expect(id).toBeDefined();
   });
 
-  it('should throw when not passing a db', () => {
+  it('throws when not passing a db', () => {
     // @ts-expect-error testing without required db param
     expect(() => mongoDbQueue()).toThrow(
       /^Please provide a mongodb.MongoClient.db$/,
     );
   });
 
-  it('should throw when not passing a valid queue name', () => {
+  it('throws when not passing a valid queue name', () => {
     // @ts-expect-error testing without required queue name param
     expect(() => mongoDbQueue(setupDb.db)).toThrow(
       /^Please provide a queue name$/,
@@ -117,7 +117,7 @@ describe('mongodb-queue', () => {
   });
 
   describe('payloads', () => {
-    it('should allow string', async () => {
+    it('allows strings', async () => {
       const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
       await queue.add('test message');
@@ -127,7 +127,7 @@ describe('mongodb-queue', () => {
       expect(message?.payload).toEqual('test message');
     });
 
-    it('should allow number', async () => {
+    it('allows numbers', async () => {
       const queue = mongoDbQueue<number>(setupDb.db, queueName);
 
       await queue.add(12);
@@ -137,7 +137,7 @@ describe('mongodb-queue', () => {
       expect(message?.payload).toEqual(12);
     });
 
-    it('should allow boolean', async () => {
+    it('allow booleans', async () => {
       const queue = mongoDbQueue<boolean>(setupDb.db, queueName);
 
       await queue.add(false);
@@ -149,7 +149,7 @@ describe('mongodb-queue', () => {
       expect((await queue.get())?.payload).toEqual(true);
     });
 
-    it('should allow object', async () => {
+    it('allows objects', async () => {
       type Complex = { something: string };
 
       const queue = mongoDbQueue<Complex>(setupDb.db, queueName);
@@ -163,7 +163,7 @@ describe('mongodb-queue', () => {
       expect(message?.payload).not.toBe(payload);
     });
 
-    it('should allow array', async () => {
+    it('allows arrays', async () => {
       type Complex = string | { test: string };
 
       const queue = mongoDbQueue<Complex[]>(setupDb.db, queueName);
@@ -183,68 +183,59 @@ describe('mongodb-queue', () => {
       value
       ${'test message'}
       ${''}
-    `(
-      'should allow string - `$value`',
-      async ({ value }: { value: string }) => {
-        const queue = mongoDbQueue<string>(setupDb.db, queueName);
+    `('allows string with `$value`', async ({ value }: { value: string }) => {
+      const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
-        const payload = value;
+      const payload = value;
 
-        const messageId1 = await queue.add(payload, payload);
-        const messageId2 = await queue.add(payload, payload);
+      const messageId1 = await queue.add(payload, payload);
+      const messageId2 = await queue.add(payload, payload);
 
-        expect(messageId1).toBeDefined();
-        expect(messageId2).toBeDefined();
-        expect(messageId2).toBe(messageId1);
-        expect((await queue.get())?.occurrences).toBe(2);
-        expect(await queue.size()).toBe(0);
-      },
-    );
+      expect(messageId1).toBeDefined();
+      expect(messageId2).toBeDefined();
+      expect(messageId2).toBe(messageId1);
+      expect((await queue.get())?.occurrences).toBe(2);
+      expect(await queue.size()).toBe(0);
+    });
 
     it.each`
       value
       ${0}
       ${10}
       ${-20}
-    `(
-      'should allow number - `$value`',
-      async ({ value }: { value: number }) => {
-        const queue = mongoDbQueue<number>(setupDb.db, queueName);
+    `('allows number with `$value`', async ({ value }: { value: number }) => {
+      const queue = mongoDbQueue<number>(setupDb.db, queueName);
 
-        const payload = value;
+      const payload = value;
 
-        const messageId1 = await queue.add(payload, payload);
-        const messageId2 = await queue.add(payload, payload);
+      const messageId1 = await queue.add(payload, payload);
+      const messageId2 = await queue.add(payload, payload);
 
-        expect(messageId1).toBeDefined();
-        expect(messageId2).toBeDefined();
-        expect(messageId2).toBe(messageId1);
-        expect((await queue.get())?.occurrences).toBe(2);
-        expect(await queue.size()).toBe(0);
-      },
-    );
+      expect(messageId1).toBeDefined();
+      expect(messageId2).toBeDefined();
+      expect(messageId2).toBe(messageId1);
+      expect((await queue.get())?.occurrences).toBe(2);
+      expect(await queue.size()).toBe(0);
+    });
 
     it.each`
       value
       ${true}
       ${false}
-    `(
-      'should allow boolean - `$value`',
-      async ({ value }: { value: boolean }) => {
-        const queue = mongoDbQueue<boolean>(setupDb.db, queueName);
+    `('allows boolean with `$value`', async ({ value }: { value: boolean }) => {
+      const queue = mongoDbQueue<boolean>(setupDb.db, queueName);
 
-        const payload = value;
+      const payload = value;
 
-        const messageId1 = await queue.add(payload, payload);
-        const messageId2 = await queue.add(payload, payload);
+      const messageId1 = await queue.add(payload, payload);
+      const messageId2 = await queue.add(payload, payload);
 
-        expect(messageId1).toBeDefined();
-        expect(messageId2).toBeDefined();
-        expect(messageId2).toBe(messageId1);
-        expect((await queue.get())?.occurrences).toBe(2);
-        expect(await queue.size()).toBe(0);
-      },
-    );
+      expect(messageId1).toBeDefined();
+      expect(messageId2).toBeDefined();
+      expect(messageId2).toBe(messageId1);
+      expect((await queue.get())?.occurrences).toBe(2);
+      expect(await queue.size()).toBe(0);
+    });
 
     it.each`
       value                                | hashKey
@@ -252,7 +243,7 @@ describe('mongodb-queue', () => {
       ${{ id: 'id1', value: 'something' }} | ${'id1'}
       ${{ id: 'id2', value: 'something' }} | ${'value'}
     `(
-      'should allow object - `$value` : `$hashKey`',
+      'allows objects with `$value` : `$hashKey`',
       async ({ value, hashKey }) => {
         const queue = mongoDbQueue(setupDb.db, queueName);
 
@@ -275,7 +266,7 @@ describe('mongodb-queue', () => {
       await setupDb.db.dropCollection(queueName);
     });
 
-    it('should create indexes on collection', async () => {
+    it('creates indexes on collection', async () => {
       const queue = mongoDbQueue<string>(setupDb.db, queueName);
       // create an message to make sure collection exists in the system
       await queue.add('test message');
@@ -295,7 +286,7 @@ describe('mongodb-queue', () => {
   describe('parallel messages processing', () => {
     const total = 25;
 
-    it('should handle multiple parallel processes', async () => {
+    it('handles multiple parallel processes', async () => {
       const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
       const messageIdPromises = [];
@@ -320,7 +311,7 @@ describe('mongodb-queue', () => {
       );
     });
 
-    it('should show correct stats based on current state', async () => {
+    it('shows correct stats based on current state', async () => {
       const queue = mongoDbQueue<string>(setupDb.db, queueName);
 
       const messageIdPromises = [];

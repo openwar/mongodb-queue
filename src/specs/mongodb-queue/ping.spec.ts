@@ -23,7 +23,7 @@ describe('mongodb-queue', () => {
   });
 
   describe('ping', () => {
-    it('should allow messages to run longer than visibility time', async () => {
+    it('allows messages to run longer than visibility time', async () => {
       const queue = mongoDbQueue<string>(setupDb.db, queueName, {
         visibility: 3,
       });
@@ -45,7 +45,7 @@ describe('mongodb-queue', () => {
       await queue.ack(message.ack);
     }, 10000);
 
-    it('should not allow acknowledged messages to be pinged', async () => {
+    it('does not allow acknowledged messages to be pinged', async () => {
       const queue = mongoDbQueue<string>(setupDb.db, queueName, {
         visibility: 5,
       });
@@ -65,7 +65,7 @@ describe('mongodb-queue', () => {
       );
     }, 10000);
 
-    it('should allow messages to extend visibility time during ping', async () => {
+    it('allows messages to extend visibility time during ping', async () => {
       const queue = mongoDbQueue<string>(setupDb.db, queueName, {
         visibility: 2,
       });
