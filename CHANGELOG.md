@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+### [1.4.2](https://github.com/openwar/mongodb-queue/compare/v1.4.1...v1.4.2) (2021-04-02)
+
+### Bug Fixes
+
+- **deps:** [security] bump ini from 1.3.5 to 1.3.8
+  ([ebcd446](https://github.com/openwar/mongodb-queue/commit/ebcd4467309e8d3896abb43643efffc334f741db))
+
 ### [1.4.1](https://github.com/openwar/mongodb-queue/compare/v1.4.0...v1.4.1) (2020-07-09)
 
 ## [1.4.0](https://github.com/openwar/mongodb-queue/compare/v1.3.2...v1.4.0) (2020-07-09)
