@@ -12,8 +12,8 @@
   "scripts": {
     "lint": "concurrently yarn:lint:*",
     "lint:eslint": "eslint .",
-    "lint:ts": "tsc --noEmit",
-    "build:types": "tsc --emitDeclarationOnly",
+    "lint:ts": "tsc",
+    "build:types": "tsc -p tsconfig.production.json",
     "build:js": "rollup -c",
     "build": "concurrently yarn:build:*",
     "prepare": "yarn run build",
