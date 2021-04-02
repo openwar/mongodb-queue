@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mongodb-queue createIndexes should create indexes on collection 1`] = `
+exports[`indexes creates indexes on collection 1`] = `
 Object {
   "_id_": Array [
     Array [
@@ -11,7 +11,7 @@ Object {
 }
 `;
 
-exports[`mongodb-queue createIndexes should create indexes on collection 2`] = `
+exports[`indexes creates indexes on collection 2`] = `
 Object {
   "_id_": Array [
     Array [
