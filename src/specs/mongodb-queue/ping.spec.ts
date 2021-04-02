@@ -20,7 +20,7 @@ describe('ping', () => {
 
   it('allows messages to run longer than visibility time', async () => {
     const queue = mongoDbQueue<string>(setupDb.db, queueName, {
-      visibility: 3,
+      visibility: 1,
     });
 
     await queue.add('test slow message processing');
@@ -29,20 +29,25 @@ describe('ping', () => {
 
     expect(message).toBeDefined();
 
-    await sleep(2000);
+    await sleep(500);
 
     // @ts-expect-error check is defined above
     await queue.ping(message.ack);
 
-    await sleep(2000);
+    await sleep(500);
+
+    // @ts-expect-error check is defined above
+    await queue.ping(message.ack);
+
+    await sleep(500);
 
     // @ts-expect-error check is defined above
     await queue.ack(message.ack);
-  }, 10000);
+  }, 2000);
 
   it('does not allow acknowledged messages to be pinged', async () => {
     const queue = mongoDbQueue<string>(setupDb.db, queueName, {
-      visibility: 5,
+      visibility: 1,
     });
 
     await queue.add('test message');
@@ -58,11 +63,11 @@ describe('ping', () => {
     expect(queue.ping(message.ack)).rejects.toThrow(
       /Queue.ping\(\): Unidentified ack : (.+)/,
     );
-  }, 10000);
+  }, 2000);
 
   it('allows messages to extend visibility time during ping', async () => {
     const queue = mongoDbQueue<string>(setupDb.db, queueName, {
-      visibility: 2,
+      visibility: 1,
     });
 
     await queue.add('test slow message processing');
@@ -71,14 +76,33 @@ describe('ping', () => {
 
     expect(message).toBeDefined();
 
-    await sleep(1000);
+    await sleep(250);
 
     // @ts-expect-error check is defined above
     await queue.ping(message.ack, { visibility: 5 });
 
-    await sleep(3000);
+    await sleep(1500);
 
     // @ts-expect-error check is defined above
     await queue.ack(message.ack);
+  }, 2000);
+
+  it('does not allow messages to be pinged after visibility time', async () => {
+    const queue = mongoDbQueue<string>(setupDb.db, queueName, {
+      visibility: 0.5,
+    });
+
+    await queue.add('test message');
+
+    const message = await queue.get();
+
+    expect(message).toBeDefined();
+
+    await sleep(1000);
+
+    // @ts-expect-error check is defined above
+    expect(queue.ack(message.ack)).rejects.toThrow(
+      /Queue.ack\(\): Unidentified ack : (.+)/,
+    );
   }, 10000);
 });
