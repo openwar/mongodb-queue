@@ -1,5 +1,6 @@
 import mongoDbQueue from '../mongodb-queue';
-import setupMongo from '../tests/setupMongo';
+import setupMongo from './__helpers__/setup-mongo';
+import sleep from './__helpers__/sleep';
 
 describe('mongodb-queue', () => {
   const queueName = 'testing-default-queue';
@@ -69,9 +70,7 @@ describe('mongodb-queue', () => {
 
     const messageToIgnore = await queue.get({ visibility: 1 });
 
-    await new Promise((resolve) => {
-      setTimeout(resolve, 1500);
-    });
+    await sleep(1500);
 
     const message = await queue.get();
 

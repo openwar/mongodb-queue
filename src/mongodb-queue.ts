@@ -7,7 +7,7 @@
  */
 
 import crypto from 'crypto';
-import type { Db, ObjectId, UpdateQuery, FilterQuery } from 'mongodb';
+import type { Db, FilterQuery, ObjectId, UpdateQuery } from 'mongodb';
 
 // some helper functions
 function id() {

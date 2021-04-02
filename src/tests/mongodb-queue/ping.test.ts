@@ -1,5 +1,6 @@
 import mongoDbQueue from '../../mongodb-queue';
-import setupMongo from '../../tests/setupMongo';
+import setupMongo from '../__helpers__/setup-mongo';
+import sleep from '../__helpers__/sleep';
 
 /**
  * The ping tests are separate to run it in parallel. These tests require some
@@ -33,15 +34,11 @@ describe('mongodb-queue', () => {
 
       expect(message).toBeDefined();
 
-      await new Promise((resolve) => {
-        setTimeout(resolve, 2000);
-      });
+      await sleep(2000);
 
       await queue.ping(message.ack);
 
-      await new Promise((resolve) => {
-        setTimeout(resolve, 2000);
-      });
+      await sleep(2000);
 
       await queue.ack(message.ack);
     }, 10000);
@@ -75,15 +72,11 @@ describe('mongodb-queue', () => {
 
       expect(message).toBeDefined();
 
-      await new Promise((resolve) => {
-        setTimeout(resolve, 1000);
-      });
+      await sleep(1000);
 
       await queue.ping(message.ack, { visibility: 5 });
 
-      await new Promise((resolve) => {
-        setTimeout(resolve, 3000);
-      });
+      await sleep(3000);
 
       await queue.ack(message.ack);
     }, 10000);
