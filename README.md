@@ -1,7 +1,7 @@
 # mongodb-queue
 
 [![NPM version][npm-image]][npm-url] ![Build Status][workflow-ci-url]
-[![license][license-image]][license-url]
+[![license][license-image]][license-url] [![install size][size-image]][size-url]
 [![codecov][codecov-image]][codecov-url]
 
 A really light-weight way to create queues with a nice API if you're already
@@ -386,6 +386,8 @@ This project it [MIT licensed](./LICENSE).
 [license-url]: https://www.npmjs.com/package/@openwar/mongodb-queue
 [workflow-ci-url]:
   https://github.com/openwar/mongodb-queue/workflows/CI/badge.svg
+[size-image]: https://packagephobia.com/badge?p=@openwar/mongodb-queue
+[size-url]: https://packagephobia.com/result?p=@openwar/mongodb-queue
 [codecov-image]:
   https://codecov.io/gh/openwar/mongodb-queue/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/openwar/mongodb-queue
