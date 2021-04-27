@@ -24,7 +24,7 @@ export default {
     commonjs(),
 
     // Compile TypeScript/JavaScript files
-    babel({ extensions, include: ['src/**/*'], exclude: ['**/__tests__/**'] }),
+    babel({ extensions, include: ['src/**/*'], exclude: ['**/specs/**'] }),
   ],
 
   output: [
