@@ -53,7 +53,7 @@
     "node": ">=12.14"
   },
   "lint-staged": {
-    "*.{js,ts,css,md}": "prettier --write"
+    "*.{js,ts,css,md,yml}": "prettier --write"
   },
   "standard-version": {
     "scripts": {
