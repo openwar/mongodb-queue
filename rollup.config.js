@@ -1,7 +1,7 @@
 import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import builtinModules from 'builtin-modules/static';
 import pkg from './package.json';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
@@ -12,19 +12,25 @@ export default {
   // Specify here external modules which you don't want to include in your
   // bundle (for instance: 'lodash', 'moment' etc.)
   // https://rollupjs.org/guide/en#external-e-external
-  external: ['crypto'],
+  external: []
+    .concat(builtinModules)
+    .concat(Object.keys(pkg.dependencies || {}))
+    .concat(Object.keys(pkg.peerDependencies || {})),
 
   plugins: [
-    peerDepsExternal(),
-
     // Allows node_modules resolution
-    nodeResolve({ extensions }),
+    nodeResolve({ extensions, preferBuiltins: true }),
 
     // Allow bundling cjs modules. Rollup doesn't understand cjs
     commonjs(),
 
     // Compile TypeScript/JavaScript files
-    babel({ extensions, include: ['src/**/*'], exclude: ['**/specs/**'] }),
+    babel({
+      extensions,
+      babelHelpers: 'bundled',
+      include: ['src/**/*'],
+      exclude: ['**/specs/**'],
+    }),
   ],
 
   output: [
