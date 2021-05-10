@@ -1,0 +1,29 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    commit_message:
+      prefix: 'fix'
+      prefix_development: 'chore'
+      include: scope
+    reviewers:
+      - alias-mac
+    assignees:
+      - alias-mac
+
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    commit_message:
+      prefix: 'fix'
+      prefix_development: 'chore'
+      include: scope
+    reviewers:
+      - alias-mac
+    assignees:
+      - alias-mac
