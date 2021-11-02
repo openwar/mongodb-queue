@@ -35,7 +35,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
     "builtin-modules": "^3.2.0",
-    "commitlint": "^12.1.1",
+    "commitlint": "^14.1.0",
     "concurrently": "^6.1.0",
     "conventional-changelog-cli": "^2.1.1",
     "eslint": "^7.26.0",
