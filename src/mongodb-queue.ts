@@ -101,7 +101,7 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
         occurrences: 1,
       });
 
-      return result.ops[0]._id.toHexString();
+      return result.insertedId.toHexString();
     }
 
     let filter: FilterQuery<MessageSchema> = {
