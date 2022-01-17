@@ -7,7 +7,7 @@
  */
 
 import crypto from 'crypto';
-import type { Db, FilterQuery, ObjectId, UpdateQuery } from 'mongodb';
+import type { Db, Filter, UpdateFilter } from 'mongodb';
 
 // some helper functions
 function id() {
@@ -15,7 +15,6 @@ function id() {
 }
 
 type MessageSchema = {
-  _id: ObjectId;
   createdAt: Date;
   updatedAt?: Date;
   visible: Date;
@@ -104,7 +103,7 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
       return result.insertedId.toHexString();
     }
 
-    let filter: FilterQuery<MessageSchema> = {
+    let filter: Filter<MessageSchema> = {
       payload: { $eq: hashKey },
     };
 
@@ -144,7 +143,7 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
       deleted: null,
       visible: { $lte: new Date(now) },
     };
-    const update: UpdateQuery<MessageSchema> = {
+    const update: UpdateFilter<MessageSchema> = {
       $inc: { tries: 1 },
       $set: {
         updatedAt: new Date(now),

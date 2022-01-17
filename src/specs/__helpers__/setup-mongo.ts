@@ -5,10 +5,6 @@ class SetupMongo {
   private _dbName: string;
 
   get client() {
-    if (!this._client.isConnected()) {
-      throw new Error('Please wait for `connection()` on `beforeAll` hook');
-    }
-
     return this._client;
   }
 
@@ -17,7 +13,7 @@ class SetupMongo {
   }
 
   constructor(url: string, dbName: string) {
-    this._client = new MongoClient(url, { useUnifiedTopology: true });
+    this._client = new MongoClient(url);
     this._dbName = dbName;
   }
 
