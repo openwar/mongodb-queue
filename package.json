@@ -41,7 +41,7 @@
     "eslint": "^8.7.0",
     "husky": "^7.0.4",
     "jest": "^27.4.7",
-    "lint-staged": "^11.0.0",
+    "lint-staged": "^12.1.7",
     "mongodb": "^3.6.6",
     "prettier": "^2.5.1",
     "rollup": "^2.64.0",
