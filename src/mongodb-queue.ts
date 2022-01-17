@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2021 Filipe Guerra
+ * Copyright (c) 2020-2022 Filipe Guerra
  * https://github.com/openwar/mongodb-queue
  *
  * For the full copyright and license information, please view the LICENSE
