@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [2.0.0](https://github.com/openwar/mongodb-queue/compare/v1.4.3...v2.0.0) (2022-01-17)
+
+### ⚠ BREAKING CHANGES
+
+- drop support for Node 13.x and 15.x
+
+NodeJS isn't giving active maintenance on these versions anymore:
+https://nodejs.org/en/about/releases/
+
+### Features
+
+- add official support to node@16
+  ([4b6ab7d](https://github.com/openwar/mongodb-queue/commit/4b6ab7d4ec845d7898d8d37d295df1f5d5ac190d))
+- add types to peerDeps (optional)
+  ([a981e3e](https://github.com/openwar/mongodb-queue/commit/a981e3e865ed08913574ad03a352ca6be485326e))
+- use returnDocument instead of returnOriginal
+  ([9fe1521](https://github.com/openwar/mongodb-queue/commit/9fe1521b54374426b1d05bcdd5700f6453b1edbf))
+
+### Bug Fixes
+
+- drop support for NodeJS 13.x and 15.x
+  ([02aced2](https://github.com/openwar/mongodb-queue/commit/02aced2c39aa598744ba4fd58b887928042228f5))
+
 ### [1.4.3](https://github.com/openwar/mongodb-queue/compare/v1.4.2...v1.4.3) (2021-04-02)
 
 ### [1.4.2](https://github.com/openwar/mongodb-queue/compare/v1.4.1...v1.4.2) (2021-04-02)
