@@ -31,6 +31,8 @@ jobs:
       matrix:
         node-version: [12.x, 14.x, 16.x]
         mongodb-version: ['4.0', '4.2', '4.4']
+        # these should match the minimum peerDependencies definitions
+        mongodb-lib: ['3.6.7', '^3.6.7']
 
     env:
       NODE: ${{ matrix.node-version }}
@@ -51,6 +53,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: yarn install --frozen-lockfile
+
+      - run: yarn add -D mongodb@${{matrix.mongodb-lib}}
 
       - run: yarn test --coverage
         env:
