@@ -144,9 +144,6 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
       deleted: null,
       visible: { $lte: new Date(now) },
     };
-    const sort = {
-      _id: 1,
-    };
     const update: UpdateQuery<MessageSchema> = {
       $inc: { tries: 1 },
       $set: {
@@ -157,7 +154,7 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
     };
 
     const result = await this.collection.findOneAndUpdate(query, update, {
-      sort: sort,
+      sort: { _id: 1 },
       returnDocument: 'after',
     });
 
