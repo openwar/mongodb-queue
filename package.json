@@ -46,7 +46,7 @@
     "prettier": "^2.3.0",
     "rollup": "^2.47.0",
     "standard-version": "^9.3.0",
-    "ts-node": "^9.1.1",
+    "ts-node": "^10.4.0",
     "typescript": "^4.2.4"
   },
   "engines": {
