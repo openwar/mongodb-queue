@@ -21,6 +21,9 @@
     "prepare:husky": "husky install",
     "test": "jest"
   },
+  "peerDependencies": {
+    "mongodb": "^3.6.7"
+  },
   "devDependencies": {
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.8",
@@ -42,7 +45,7 @@
     "husky": "^7.0.4",
     "jest": "^27.4.7",
     "lint-staged": "^12.1.7",
-    "mongodb": "^3.6.6",
+    "mongodb": "3.6.7",
     "prettier": "^2.5.1",
     "rollup": "^2.64.0",
     "standard-version": "^9.3.2",

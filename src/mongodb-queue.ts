@@ -123,7 +123,7 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
         },
         $setOnInsert: insertFields,
       },
-      { upsert: true, returnOriginal: false },
+      { upsert: true, returnDocument: 'after' },
     );
 
     if (!message.value) {
@@ -158,7 +158,7 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
 
     const result = await this.collection.findOneAndUpdate(query, update, {
       sort: sort,
-      returnOriginal: false,
+      returnDocument: 'after',
     });
 
     const message = result.value;
@@ -201,7 +201,7 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
     };
 
     const message = await this.collection.findOneAndUpdate(query, update, {
-      returnOriginal: false,
+      returnDocument: 'after',
     });
 
     if (!message.value) {
@@ -225,7 +225,7 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
     };
 
     const message = await this.collection.findOneAndUpdate(query, update, {
-      returnOriginal: false,
+      returnDocument: 'after',
     });
 
     if (!message.value) {
