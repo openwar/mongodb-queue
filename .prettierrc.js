@@ -6,8 +6,16 @@ module.exports = {
     {
       files: '*.md',
       options: {
-        singleQuote: true,
         proseWrap: 'always',
+      },
+    },
+    {
+      files: ['tsconfig.json', 'tsconfig.*.json'],
+      options: {
+        parser: 'json5',
+        quoteProps: 'preserve',
+        singleQuote: false,
+        trailingComma: 'all',
       },
     },
   ],
