@@ -61,9 +61,6 @@
   "engines": {
     "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
   },
-  "lint-staged": {
-    "*.{js,ts,css,md,yml}": "prettier --write"
-  },
   "standard-version": {
     "scripts": {
       "postchangelog": "prettier --write CHANGELOG.md"
