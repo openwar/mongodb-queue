@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [3.0.0](https://github.com/openwar/mongodb-queue/compare/v2.0.0...v3.0.0) (2022-01-19)
+
+### ⚠ BREAKING CHANGES
+
+- it is hard to support both versions (3.x and 4.x) of native driver on the same
+  branch because 4.x has native types definitions and they diverge from the ones
+  provided by @types/mongodb.
+
+This means that this version might still be compatible with previous versions of
+mongodb native driver (3.6.x and 3.7.x), but we aren't testing them due to
+typescript mismatch.
+
+Please open an issue and we will try to support your use case.
+
+### Features
+
+- add mongodb@4.x support
+  ([3e37498](https://github.com/openwar/mongodb-queue/commit/3e37498adf1aaa290cf97c5e86b7a526cef91b13))
+
 ## [2.0.0](https://github.com/openwar/mongodb-queue/compare/v1.4.3...v2.0.0) (2022-01-17)
 
 ### ⚠ BREAKING CHANGES
