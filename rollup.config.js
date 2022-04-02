@@ -6,7 +6,10 @@ import pkg from './package.json';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
-export default {
+/**
+ * @type {import('rollup').RollupOptions}
+ */
+const config = {
   input: 'src/mongodb-queue.ts',
 
   // Specify here external modules which you don't want to include in your
@@ -47,3 +50,5 @@ export default {
     },
   ],
 };
+
+export default config;
