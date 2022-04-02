@@ -9,13 +9,16 @@
   "repository": "https://github.com/openwar/mongodb-queue",
   "author": "Filipe Guerra <alias.mac@gmail.com>",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "concurrently yarn:lint:*",
     "lint:eslint": "eslint .",
     "lint:ts": "tsc",
+    "build": "concurrently yarn:build:*",
     "build:types": "tsc -p tsconfig.production.json",
     "build:js": "rollup -c",
-    "build": "concurrently yarn:build:*",
     "prepare": "concurrently yarn:prepare:*",
     "prepare:build": "yarn build",
     "prepare:husky": "husky install",
