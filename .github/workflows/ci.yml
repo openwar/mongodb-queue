@@ -62,7 +62,7 @@ jobs:
           MONGO_DB_NAME: mongodb-queue
 
       - name: Code Coverage
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           env_vars: NODE,MONGO
