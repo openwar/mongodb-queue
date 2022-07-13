@@ -4,6 +4,42 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [4.0.0](https://github.com/openwar/mongodb-queue/compare/v3.1.0...v4.0.0) (2022-07-13)
+
+### ⚠ BREAKING CHANGES
+
+- use the new `add(payload, options)` signature.
+
+If you are using the `hashKey` param of `add` method, please migrate your code
+to pass it as an optional param. Example:
+
+```diff
+- queue.add(payload, 'id');
++ queue.add(payload, { hashKey: 'id' })
+```
+
+or a more generic example,
+
+```diff
+- queue.add(payload, hashKey);
++ queue.add(payload, { hashKey })
+```
+
+- drop support for Node 12.x
+
+NodeJS isn't giving active maintenance on these versions anymore:
+https://nodejs.org/en/about/releases/ The EOL on this version was 2022-04-30.
+
+### Features
+
+- remove legacy `add` method signature
+  ([635bba1](https://github.com/openwar/mongodb-queue/commit/635bba10583ee26d7dd7f52dc39d8a1699ab2ecc))
+
+### Bug Fixes
+
+- drop support for NodeJS 12.x
+  ([c50909f](https://github.com/openwar/mongodb-queue/commit/c50909f3e4abb35d5ce24cca1baa1eb302768ac0))
+
 ## [3.1.0](https://github.com/openwar/mongodb-queue/compare/v3.0.0...v3.1.0) (2022-07-13)
 
 ### Features
