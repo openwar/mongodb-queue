@@ -34,10 +34,16 @@ export type Message<T = unknown> = {
   occurrences?: number;
 };
 
+type AddOptions<T> = {
+  hashKey?: keyof T | T;
+  delay?: number;
+};
+
 export interface MongoDbQueue<T = unknown> {
   createIndexes(): Promise<void>;
 
   add(payload: T, hashKey?: keyof T | T): Promise<string>;
+  add(payload: T, options?: AddOptions<T>): Promise<string>;
 
   get(options?: { visibility?: number }): Promise<Message<T> | undefined>;
 
@@ -54,7 +60,7 @@ export interface MongoDbQueue<T = unknown> {
   done(): Promise<number>;
 }
 
-class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
+class MongoDbQueueImpl implements MongoDbQueue {
   private _db: Db;
   private _name: string;
   private _visibility: number;
@@ -84,12 +90,18 @@ class MongoDbQueueImpl<T = unknown> implements MongoDbQueue {
     );
   }
 
-  async add(payload: T, hashKey?: keyof T | T): Promise<string> {
-    const now = new Date();
+  async add<T>(
+    payload: T,
+    optionsOrHashKey?: AddOptions<T> | keyof T | T,
+  ): Promise<string> {
+    const options = (optionsOrHashKey as AddOptions<T>) ?? {};
+    const hashKey = options?.hashKey ?? optionsOrHashKey;
+    const delay = options?.delay ?? 0;
+    const now = Date.now();
 
     const insertFields = {
-      createdAt: now,
-      visible: now,
+      createdAt: new Date(now),
+      visible: new Date(now + delay * 1000),
       payload,
       tries: 0,
     };
@@ -268,5 +280,5 @@ export default function mongoDbQueue<T = unknown>(
   name: string,
   options: { visibility?: number } = {},
 ): MongoDbQueue<T> {
-  return new MongoDbQueueImpl<T>(db, name, options);
+  return new MongoDbQueueImpl(db, name, options);
 }

@@ -174,6 +174,21 @@ const id = await queue.add(['msg1', 'msg2', 'msg3']);
 // 'id' is returned, useful for logging.
 ```
 
+You can delay individual messages from being visible until a certain period has
+elapsed. Use the optional `delay` parameter to only process this message in the
+future. This is useful if you need to schedule an event to be processed in a
+regular interval or at a certain point in time.
+
+```js
+const payload = {
+  id: 'msg',
+  msg: 'This will only be visible 100 seconds from now',
+};
+const id = await queue.add(payload, { delay: 120 });
+// Message will not be available to `get` for 2 minutes.
+// 'id' is returned, useful for logging.
+```
+
 In case your messages can be duplicated (like events that occur multiple times
 in a short period), you can use the optional `hashKey` parameter to prevent this
 event from being duplicated in the queue. This is extremely useful if you are
@@ -181,8 +196,8 @@ doing notifications or handling events from external sources (like webhooks).
 
 ```js
 const payload = { id: 'msg1', msg: 'Possible duplicated message' };
-const id1 = await queue.add(payload, 'id');
-const id2 = await queue.add(payload, 'id');
+const id1 = await queue.add(payload, { hashKey: 'id' });
+const id2 = await queue.add(payload, { hashKey: 'id' });
 // Only one Message with `payload` added.
 // 'id1' is the same as 'id2', and it is useful for logging.
 ```
@@ -200,8 +215,8 @@ const hash = crypto
   .digest('hex');
 
 const hash = crypto.createHash('sha1');
-const id1 = await queue.add({ ...payload, hash }, 'hash');
-const id2 = await queue.add({ ...payload, hash }, 'hash');
+const id1 = await queue.add({ ...payload, hash }, { hashKey: 'hash' });
+const id2 = await queue.add({ ...payload, hash }, { hashKey: 'hash' });
 // Only one Message with `payload` added.
 // 'id1' is the same as 'id2', and it is useful for logging.
 ```
@@ -212,8 +227,8 @@ process based on some event based queue), you can easily pass the payload as the
 
 ```js
 const payload = 'some-unique-id';
-const id1 = await queue.add(payload, payload);
-const id2 = await queue.add(payload, payload);
+const id1 = await queue.add(payload, { hashKey: payload });
+const id2 = await queue.add(payload, { hashKey: payload });
 // Only one Message with `payload` added.
 // 'id1' is the same as 'id2', and it is useful for logging.
 ```
@@ -223,8 +238,8 @@ for ids.
 
 ```js
 const payload = 123456789;
-const id1 = await queue.add(payload, payload);
-const id2 = await queue.add(payload, payload);
+const id1 = await queue.add(payload, { hashKey: payload });
+const id2 = await queue.add(payload, { hashKey: payload });
 // Only one Message with `payload` added.
 // 'id1' is the same as 'id2', and it is useful for logging.
 ```
