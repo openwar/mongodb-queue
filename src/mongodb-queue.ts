@@ -42,7 +42,6 @@ type AddOptions<T> = {
 export interface MongoDbQueue<T = unknown> {
   createIndexes(): Promise<void>;
 
-  add(payload: T, hashKey?: keyof T | T): Promise<string>;
   add(payload: T, options?: AddOptions<T>): Promise<string>;
 
   get(options?: { visibility?: number }): Promise<Message<T> | undefined>;
@@ -90,12 +89,8 @@ class MongoDbQueueImpl implements MongoDbQueue {
     );
   }
 
-  async add<T>(
-    payload: T,
-    optionsOrHashKey?: AddOptions<T> | keyof T | T,
-  ): Promise<string> {
-    const options = (optionsOrHashKey as AddOptions<T>) ?? {};
-    const hashKey = options?.hashKey ?? optionsOrHashKey;
+  async add<T>(payload: T, options?: AddOptions<T>): Promise<string> {
+    const hashKey = options?.hashKey;
     const delay = options?.delay ?? 0;
     const now = Date.now();
 
