@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [3.1.0](https://github.com/openwar/mongodb-queue/compare/v3.0.0...v3.1.0) (2022-07-13)
+
+### Features
+
+- allow delay param to add method
+  ([6b86dac](https://github.com/openwar/mongodb-queue/commit/6b86dacbd99fbcce3976a2d1dffbe5b4ca04ab61))
+
 ## [3.0.0](https://github.com/openwar/mongodb-queue/compare/v2.0.0...v3.0.0) (2022-01-19)
 
 ### ⚠ BREAKING CHANGES
