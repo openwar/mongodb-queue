@@ -257,7 +257,7 @@ Message will have the following structure:
   id: '533b1eb64ee78a57664cc76c',
   // ID for ack and ping operations
   ack: 'c8a3cc585cbaaacf549d746d7db72f69',
-  // Payload passed when the message was addded
+  // Payload passed when the message was added
   payload: 'Hello, World!',
   // Number of times this message has been retrieved from queue without being
   // acknowledged
@@ -298,7 +298,7 @@ passing the `visibility` option:
 const msg = await queue.get();
 const id = await queue.ping(msg.ack, { visibility: 10 });
 // this message has had its visibility window extended by 10 seconds instead of
-// the visibilty set by the queue in general
+// the visibility set by the queue in general
 ```
 
 ### .total()
