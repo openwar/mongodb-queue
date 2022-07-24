@@ -4,5 +4,5 @@
     "noEmit": false,
     "emitDeclarationOnly": true,
   },
-  "exclude": ["node_modules", "**/specs/**/*"],
+  "exclude": ["node_modules", "**/specs/**/*", "rollup.config.ts"],
 }

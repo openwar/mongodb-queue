@@ -10,9 +10,10 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "declarationDir": "dist/types",
     "declaration": true,
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "rollup.config.ts"],
 }
