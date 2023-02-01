@@ -55,7 +55,7 @@
     "husky": "^8.0.1",
     "jest": "^28.1.3",
     "lint-staged": "^13.0.3",
-    "mongodb": "^4.8.0",
+    "mongodb": "^5.0.0",
     "prettier": "^2.7.1",
     "rollup": "^2.77.0",
     "standard-version": "^9.5.0",
