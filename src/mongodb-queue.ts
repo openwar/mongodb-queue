@@ -129,7 +129,7 @@ class MongoDbQueueImpl implements MongoDbQueue {
         },
         $setOnInsert: insertFields,
       },
-      { upsert: true, returnDocument: 'after' },
+      { upsert: true, returnDocument: 'after', includeResultMetadata: true },
     );
 
     if (!message.value) {
@@ -162,6 +162,7 @@ class MongoDbQueueImpl implements MongoDbQueue {
     const result = await this.collection.findOneAndUpdate(query, update, {
       sort: { _id: 1 },
       returnDocument: 'after',
+      includeResultMetadata: true,
     });
 
     const message = result.value;
@@ -205,6 +206,7 @@ class MongoDbQueueImpl implements MongoDbQueue {
 
     const message = await this.collection.findOneAndUpdate(query, update, {
       returnDocument: 'after',
+      includeResultMetadata: true,
     });
 
     if (!message.value) {
@@ -229,6 +231,7 @@ class MongoDbQueueImpl implements MongoDbQueue {
 
     const message = await this.collection.findOneAndUpdate(query, update, {
       returnDocument: 'after',
+      includeResultMetadata: true,
     });
 
     if (!message.value) {
