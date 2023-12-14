@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [5.0.0](https://github.com/openwar/mongodb-queue/compare/v4.0.1...v5.0.0) (2023-12-14)
+
+### ⚠ BREAKING CHANGES
+
+- drop support for mongodb@4.x.
+
+We are supporting the latest 2 major versions.
+
+- drop support for Node 14.x
+
+NodeJS isn't giving active maintenance on these versions anymore:
+https://nodejs.org/en/about/previous-releases
+
+### Features
+
+- add peerDep support for mongodb@6.x
+  ([0d73881](https://github.com/openwar/mongodb-queue/commit/0d73881c3535a823d12bad51e46ff7585f4a5957))
+
+### Bug Fixes
+
+- drop support for NodeJS 14.x
+  ([34e6b03](https://github.com/openwar/mongodb-queue/commit/34e6b03b5bacad5ed3a523bce7326000668acd76))
+
 ### [4.0.1](https://github.com/openwar/mongodb-queue/compare/v4.0.0...v4.0.1) (2023-10-30)
 
 ## [4.0.0](https://github.com/openwar/mongodb-queue/compare/v3.1.0...v4.0.0) (2022-07-13)
