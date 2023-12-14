@@ -13,14 +13,14 @@
     "dist"
   ],
   "scripts": {
-    "lint": "concurrently yarn:lint:*",
+    "lint": "concurrently 'npm:lint:*'",
     "lint:eslint": "eslint .",
     "lint:ts": "tsc",
-    "build": "concurrently yarn:build:*",
+    "build": "concurrently 'npm:build:*'",
     "build:types": "tsc -p tsconfig.production.json",
     "build:js": "rollup -c rollup.config.ts --configPlugin typescript",
-    "prepare": "concurrently yarn:prepare:*",
-    "prepare:build": "yarn build",
+    "prepare": "concurrently 'npm:prepare:*'",
+    "prepare:build": "npm run build",
     "prepare:husky": "husky install",
     "test": "jest"
   },
