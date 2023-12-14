@@ -7,7 +7,7 @@
  */
 
 import crypto from 'crypto';
-import type { Db, Filter, UpdateFilter } from 'mongodb';
+import type { Db, Filter, ModifyResult, UpdateFilter } from 'mongodb';
 
 // some helper functions
 function id() {
@@ -120,7 +120,8 @@ class MongoDbQueueImpl implements MongoDbQueue {
       };
     }
 
-    const message = await this.collection.findOneAndUpdate(
+    // @ts-expect-error includeResultMetadata is only available in mongodb@6
+    const message = (await this.collection.findOneAndUpdate(
       filter,
       {
         $inc: { occurrences: 1 },
@@ -129,8 +130,9 @@ class MongoDbQueueImpl implements MongoDbQueue {
         },
         $setOnInsert: insertFields,
       },
-      { upsert: true, returnDocument: 'after' },
-    );
+      { upsert: true, returnDocument: 'after', includeResultMetadata: true },
+      // TODO remove this cast when we drop support for mongodb@5
+    )) as ModifyResult<MessageSchema>;
 
     if (!message.value) {
       throw new Error(`Queue.add(): Failed add message`);
