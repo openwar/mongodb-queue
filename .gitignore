@@ -1,6 +1,5 @@
 # Project dependencies
 node_modules
-yarn-error.log
 
 # compiled files
 dist
