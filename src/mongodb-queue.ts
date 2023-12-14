@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Filipe Guerra
+ * Copyright (c) 2020-2023 Filipe Guerra
  * https://github.com/openwar/mongodb-queue
  *
  * For the full copyright and license information, please view the LICENSE
@@ -89,7 +89,10 @@ class MongoDbQueueImpl implements MongoDbQueue {
     );
   }
 
-  async add<T>(payload: T, options?: AddOptions<T>): Promise<string> {
+  async add<T>(
+    payload: NonNullable<T>,
+    options?: AddOptions<T>,
+  ): Promise<string> {
     const hashKey = options?.hashKey;
     const delay = options?.delay ?? 0;
     const now = Date.now();
