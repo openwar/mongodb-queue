@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  */
 
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 import type { Db, Filter, UpdateFilter } from 'mongodb';
 
 // some helper functions
