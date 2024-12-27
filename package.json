@@ -1,6 +1,6 @@
 {
   "name": "@openwar/mongodb-queue",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Use your existing MongoDB as a local queue",
   "main": "dist/mongodb-queue.js",
   "module": "dist/mongodb-queue.es.js",

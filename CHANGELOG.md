@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [6.1.0](https://github.com/openwar/mongodb-queue/compare/v6.0.0...v6.1.0) (2024-12-27)
+
+### Features
+
+- :arrow_up: use rollup 4.x
+  ([ae4369e](https://github.com/openwar/mongodb-queue/commit/ae4369ef14003da4f0ea009a250ef38b32b8539d))
+
 ## [6.0.0](https://github.com/openwar/mongodb-queue/compare/v5.0.2...v6.0.0) (2024-12-27)
 
 ### ⚠ BREAKING CHANGES
