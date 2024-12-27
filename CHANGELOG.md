@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+### [5.0.1](https://github.com/openwar/mongodb-queue/compare/v5.0.0...v5.0.1) (2024-12-27)
+
+### Bug Fixes
+
+- use node imports for builtin modules
+  ([2939eb9](https://github.com/openwar/mongodb-queue/commit/2939eb9eb51ea3ae2d498c8f763a8b37e98db0b5))
+
 ## [5.0.0](https://github.com/openwar/mongodb-queue/compare/v4.0.1...v5.0.0) (2023-12-14)
 
 ### ⚠ BREAKING CHANGES
