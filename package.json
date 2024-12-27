@@ -21,7 +21,7 @@
     "lint:ts": "tsc",
     "build": "concurrently 'npm:build:*'",
     "build:types": "tsc -p tsconfig.production.json",
-    "build:js": "rollup -c rollup.config.ts --configPlugin typescript",
+    "build:js": "rollup -c rollup.config.mjs",
     "prepare": "concurrently 'npm:prepare:*'",
     "prepare:build": "npm run build",
     "prepare:husky": "husky install",

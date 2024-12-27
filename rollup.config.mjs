@@ -1,13 +1,13 @@
 import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import builtinModules from 'builtin-modules/static';
-import type { RollupOptions } from 'rollup';
-import pkg from './package.json';
+import builtinModules from 'builtin-modules/static.js';
+import pkg from './package.json' with { type: 'json' };
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
-const config: RollupOptions = {
+const config = {
+  strictDeprecations: true,
   input: 'src/mongodb-queue.ts',
 
   // Specify here external modules which you don't want to include in your
