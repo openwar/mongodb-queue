@@ -6,7 +6,10 @@
   "module": "dist/mongodb-queue.es.js",
   "jsnext:main": "dist/mongodb-queue.es.js",
   "types": "dist/types/mongodb-queue.d.ts",
-  "repository": "https://github.com/openwar/mongodb-queue",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openwar/mongodb-queue.git"
+  },
   "author": "Filipe Guerra <alias.mac@gmail.com>",
   "license": "MIT",
   "files": [
