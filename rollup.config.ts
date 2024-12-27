@@ -2,22 +2,19 @@ import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import builtinModules from 'builtin-modules';
+import type { RollupOptions } from 'rollup';
 import pkg from './package.json' with { type: 'json' };
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
-const config = {
+const config: RollupOptions = {
   strictDeprecations: true,
   input: 'src/mongodb-queue.ts',
 
   // Specify here external modules which you don't want to include in your
   // bundle (for instance: 'lodash', 'moment' etc.)
   // https://rollupjs.org/guide/en#external-e-external
-  external: [
-    ...builtinModules,
-    ...Object.keys(pkg.dependencies ?? {}),
-    ...Object.keys(pkg.peerDependencies ?? {}),
-  ],
+  external: [...builtinModules, ...Object.keys(pkg.peerDependencies ?? {})],
 
   plugins: [
     // Allows node_modules resolution
