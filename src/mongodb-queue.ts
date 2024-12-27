@@ -119,7 +119,7 @@ class MongoDbQueueImpl implements MongoDbQueue {
 
     if (typeof payload === 'object') {
       filter = {
-        [`payload.${hashKey}`]: payload[hashKey as keyof T],
+        [`payload.${String(hashKey)}`]: payload[hashKey as keyof T],
       };
     }
 
