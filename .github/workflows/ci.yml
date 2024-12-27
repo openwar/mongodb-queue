@@ -36,6 +36,7 @@ jobs:
     env:
       NODE: ${{ matrix.node-version }}
       MONGO: ${{ matrix.mongodb-version }}
+      MONGOLIB: ${{ matrix.mongodb-lib }}
 
     services:
       mongodb:
@@ -65,5 +66,5 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          env_vars: NODE,MONGO
+          env_vars: NODE,MONGO,MONGOLIB
           fail_ci_if_error: true
