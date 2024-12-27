@@ -1,7 +1,7 @@
 import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import builtinModules from 'builtin-modules/static.js';
+import builtinModules from 'builtin-modules';
 import pkg from './package.json' with { type: 'json' };
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
