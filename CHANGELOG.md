@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [6.0.0](https://github.com/openwar/mongodb-queue/compare/v5.0.2...v6.0.0) (2024-12-27)
+
+### ⚠ BREAKING CHANGES
+
+- drop support for NodeJS 16.x. Active maintenance ended in 2023-09-11.
+
+### Features
+
+- drop support for NodeJS 16.x
+  ([8a3e870](https://github.com/openwar/mongodb-queue/commit/8a3e87073522c327c38b482551549cdb3b5f8e8b))
+
 ### [5.0.2](https://github.com/openwar/mongodb-queue/compare/v5.0.1...v5.0.2) (2024-12-27)
 
 ### [5.0.1](https://github.com/openwar/mongodb-queue/compare/v5.0.0...v5.0.1) (2024-12-27)
