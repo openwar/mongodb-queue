@@ -36,6 +36,7 @@ export type Message<T = unknown> = {
 
 type AddOptions<T> = {
   hashKey?: keyof T | T;
+  allowDuplicatesOnDeleted?: boolean;
   delay?: number;
 };
 
@@ -94,6 +95,7 @@ class MongoDbQueueImpl implements MongoDbQueue {
     options?: AddOptions<T>,
   ): Promise<string> {
     const hashKey = options?.hashKey;
+    const allowDuplicatesOnDeleted = options?.allowDuplicatesOnDeleted ?? false;
     const delay = options?.delay ?? 0;
     const now = Date.now();
 
@@ -121,6 +123,10 @@ class MongoDbQueueImpl implements MongoDbQueue {
       filter = {
         [`payload.${String(hashKey)}`]: payload[hashKey as keyof T],
       };
+    }
+
+    if (allowDuplicatesOnDeleted) {
+      filter.deleted = null;
     }
 
     const message = await this.collection.findOneAndUpdate(

@@ -6,3 +6,6 @@ dist
 
 # test coverage report
 coverage
+
+# IDE config files
+.idea

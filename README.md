@@ -244,6 +244,40 @@ const id2 = await queue.add(payload, { hashKey: payload });
 // 'id1' is the same as 'id2', and it is useful for logging.
 ```
 
+In case your messages can be duplicated and must be processed again if the
+previous message with the same `hashKey` has already been processed, you can use
+the optional `allowDuplicatesOnDeleted` boolean parameter to allow this event to
+be duplicated in the queue if the previous record with the same key are deleted.
+
+```js
+// Add messages for the first time
+const payload = { id: 'msg1', msg: 'Possible duplicated message' };
+const id1 = await queue.add(payload, {
+  hashKey: 'id',
+  allowDuplicatesOnDeleted: true,
+});
+const id2 = await queue.add(payload, {
+  hashKey: 'id',
+  allowDuplicatesOnDeleted: true,
+});
+// Only one Message with `payload` added.
+// process the message
+const msg = await queue.get();
+const id = await queue.ack(msg.ack);
+// Add messages for the second time
+const payload = { id: 'msg1', msg: 'Possible duplicated message' };
+const id1 = await queue.add(payload, {
+  hashKey: 'id',
+  allowDuplicatesOnDeleted: true,
+});
+const id2 = await queue.add(payload, {
+  hashKey: 'id',
+  allowDuplicatesOnDeleted: true,
+});
+// Only one Message with `payload` added.
+// Two message with same hashKey in the queue, one deleted (processed) and one active
+```
+
 ### .get()
 
 Retrieve a message from the queue:
