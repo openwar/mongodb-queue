@@ -1,6 +1,29 @@
 name: 🔨 Build & Test
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'bun.lock'
+      - 'tsconfig*.json'
+      - '*.config.ts'
+      - '*.config.js'
+      - '*.config.cjs'
+      - '*.config.mjs'
+      - '.github/workflows/build-test.yml'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'bun.lock'
+      - 'tsconfig*.json'
+      - '*.config.ts'
+      - '*.config.js'
+      - '*.config.cjs'
+      - '*.config.mjs'
+      - '.github/workflows/build-test.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -9,6 +32,7 @@ concurrency:
 jobs:
   build:
     name: 🔨 Build
+    if: github.event.pull_request.draft == false || github.event_name == 'push'
     runs-on: ubuntu-latest
 
     strategy:
@@ -43,6 +67,7 @@ jobs:
 
   test-node:
     name: 🧪 Test Node.js
+    if: github.event.pull_request.draft == false || github.event_name == 'push'
     runs-on: ubuntu-latest
 
     strategy:
@@ -103,6 +128,7 @@ jobs:
 
   test-bun:
     name: 🧪 Test Bun
+    if: github.event.pull_request.draft == false || github.event_name == 'push'
     runs-on: ubuntu-latest
 
     strategy:
