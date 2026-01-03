@@ -14,14 +14,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: npm ci
+      - run: bun install
 
-      - run: npm run build
+      - name: Build
+        run: |
+          if [[ "${{ matrix.node-version }}" == "20.x" ]]; then
+            npm run build
+          else
+            node --run build
+          fi
 
   test-node:
     runs-on: ubuntu-latest
@@ -47,17 +58,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: npm ci
+      - run: bun install
 
       # peerDeps installs
-      - run: npm add -D mongodb@${{matrix.mongodb-lib}}
+      - run: bun add -D mongodb@${{matrix.mongodb-lib}}
 
-      - run: npm run test -- --coverage
+      - name: Run tests
+        run: |
+          if [[ "${{ matrix.node-version }}" == "20.x" ]]; then
+            npm run test -- --coverage
+          else
+            node --run test -- --coverage
+          fi
         env:
           CI: true
           MONGO_DB_NAME: mongodb-queue
