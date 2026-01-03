@@ -28,7 +28,7 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "mongodb": "^5.7.0 || ^6.0.0"
+    "mongodb": "^5.7.0 || ^6.0.0 || ^7.0.0"
   },
   "peerDependenciesMeta": {
     "@types/mongodb": {
