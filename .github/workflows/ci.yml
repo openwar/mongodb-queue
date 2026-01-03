@@ -23,7 +23,7 @@ jobs:
 
       - run: npm run build
 
-  test:
+  test-node:
     runs-on: ubuntu-latest
 
     strategy:
@@ -67,4 +67,47 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           env_vars: NODE,MONGO,MONGOLIB
+          fail_ci_if_error: true
+
+  test-bun:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        mongodb-version: ['4.2', '4.4', '5.0', '6.0', '7.0', '8.0']
+        mongodb-lib: ['^5.7.0', '^6.0.0', '^7.0.0']
+
+    env:
+      BUN: latest
+      MONGO: ${{ matrix.mongodb-version }}
+      MONGOLIB: ${{ matrix.mongodb-lib }}
+
+    services:
+      mongodb:
+        image: mongo:${{ matrix.mongodb-version }}
+        ports:
+          - 27017:27017
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - run: bun install
+
+      # peerDeps installs
+      - run: bun add -D mongodb@${{matrix.mongodb-lib}}
+
+      - run: bun run test -- --coverage
+        env:
+          CI: true
+          MONGO_DB_NAME: mongodb-queue
+
+      - name: Code Coverage
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          env_vars: BUN,MONGO,MONGOLIB
           fail_ci_if_error: true
