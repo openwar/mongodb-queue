@@ -1,7 +1,7 @@
 {
   "name": "@openwar/mongodb-queue",
   "version": "6.2.0",
-  "description": "Use your existing MongoDB as a local queue",
+  "description": "A lightweight MongoDB-based message queue with TypeScript support, atomic operations, and message deduplication",
   "main": "dist/mongodb-queue.js",
   "module": "dist/mongodb-queue.es.js",
   "jsnext:main": "dist/mongodb-queue.es.js",
@@ -12,6 +12,18 @@
   },
   "author": "Filipe Guerra <alias.mac@gmail.com>",
   "license": "MIT",
+  "homepage": "https://github.com/openwar/mongodb-queue#readme",
+  "keywords": [
+    "mongodb",
+    "mongo",
+    "queue",
+    "message-queue",
+    "fifo",
+    "typescript",
+    "atomic",
+    "deduplication",
+    "bun"
+  ],
   "files": [
     "dist"
   ],
