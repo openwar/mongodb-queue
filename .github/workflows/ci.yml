@@ -31,7 +31,7 @@ jobs:
       matrix:
         node-version: [20.x, 22.x, 24.x]
         mongodb-version: ['4.2', '4.4', '5.0', '6.0']
-        mongodb-lib: ['5.7.0', '^5.7.0', '6.0.0', '^6.0.0']
+        mongodb-lib: ['5.7.0', '^5.7.0', '6.0.0', '^6.0.0', '7.0.0', '^7.0.0']
 
     env:
       NODE: ${{ matrix.node-version }}
