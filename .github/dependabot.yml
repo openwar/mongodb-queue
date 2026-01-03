@@ -9,8 +9,6 @@ updates:
       prefix: 'fix'
       prefix-development: 'chore'
       include: scope
-    reviewers:
-      - alias-mac
     assignees:
       - alias-mac
 
@@ -23,7 +21,5 @@ updates:
       prefix: 'fix'
       prefix-development: 'chore'
       include: scope
-    reviewers:
-      - alias-mac
     assignees:
       - alias-mac
