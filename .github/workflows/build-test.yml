@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - name: ⬇️ Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 🥟 Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -50,7 +50,7 @@ jobs:
           bun-version-file: .bun-version
 
       - name: 🟢 Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -90,7 +90,7 @@ jobs:
 
     steps:
       - name: ⬇️ Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 🥟 Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -98,7 +98,7 @@ jobs:
           bun-version-file: .bun-version
 
       - name: 🟢 Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -151,7 +151,7 @@ jobs:
 
     steps:
       - name: ⬇️ Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 🥟 Setup Bun
         uses: oven-sh/setup-bun@v2
