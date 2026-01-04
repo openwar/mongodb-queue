@@ -6,6 +6,35 @@
  * file that was distributed with this source code.
  */
 
+/**
+ * A lightweight MongoDB-based message queue with TypeScript support, atomic
+ * operations, and message deduplication.
+ *
+ * @example
+ * ```ts
+ * import { MongoClient } from 'mongodb';
+ * import mongoDbQueue from '@openwar/mongodb-queue';
+ *
+ * const client = new MongoClient('mongodb://localhost:27017/');
+ * await client.connect();
+ *
+ * const db = client.db('my-app');
+ * const queue = mongoDbQueue(db, 'my-queue');
+ *
+ * // Add a message
+ * await queue.add({ task: 'process-image', id: 123 });
+ *
+ * // Get and process a message
+ * const msg = await queue.get();
+ * if (msg) {
+ *   console.log(msg.payload);
+ *   await queue.ack(msg.ack);
+ * }
+ * ```
+ *
+ * @module
+ */
+
 import crypto from 'node:crypto';
 import type { Db, Filter, UpdateFilter } from 'mongodb';
 
@@ -24,13 +53,40 @@ type MessageSchema = {
   occurrences?: number;
 };
 
+/**
+ * A message retrieved from the queue.
+ *
+ * @typeParam T - The type of the message payload
+ */
 export type Message<T = unknown> = {
+  /**
+   * Unique identifier for the message
+   */
   id: string;
+  /**
+   * Acknowledgement token used for {@link MongoDbQueue.ack} and
+   * {@link MongoDbQueue.ping}
+   */
   ack: string;
+  /**
+   * When the message was first added to the queue
+   */
   createdAt: Date;
+  /**
+   * When the message was last updated
+   */
   updatedAt: Date;
+  /**
+   * The message payload
+   */
   payload: T;
+  /**
+   * Number of times this message has been retrieved without being acknowledged
+   */
   tries: number;
+  /**
+   * Number of times a duplicate message was added (when using hashKey)
+   */
   occurrences?: number;
 };
 
@@ -39,23 +95,67 @@ type AddOptions<T> = {
   delay?: number;
 };
 
+/**
+ * A MongoDB-backed message queue interface.
+ *
+ * @typeParam T - The type of message payloads in this queue
+ */
 export interface MongoDbQueue<T = unknown> {
+  /**
+   * Creates the required indexes for optimal queue performance.
+   * Call this once when setting up your queue.
+   */
   createIndexes(): Promise<void>;
 
+  /**
+   * Adds a message to the queue.
+   *
+   * @param payload - The message payload
+   * @param options - Optional settings for delay and deduplication
+   * @returns The ID of the added message
+   */
   add(payload: T, options?: AddOptions<T>): Promise<string>;
 
+  /**
+   * Retrieves the next available message from the queue.
+   * The message becomes invisible to other consumers for the visibility
+   * timeout.
+   *
+   * @param options - Optional visibility timeout override
+   * @returns The message, or undefined if the queue is empty
+   */
   get(options?: { visibility?: number }): Promise<Message<T> | undefined>;
 
+  /**
+   * Extends the visibility timeout for a message being processed.
+   * Use this for long-running tasks to prevent the message from being
+   * redelivered.
+   *
+   * @param ack - The acknowledgement token from the message
+   * @param options - Optional visibility timeout override
+   * @returns The message ID
+   */
   ping(ack: string, options?: { visibility?: number }): Promise<string>;
 
+  /**
+   * Acknowledges successful processing of a message, removing it from the
+   * queue.
+   *
+   * @param ack - The acknowledgement token from the message
+   * @returns The message ID
+   */
   ack(ack: string): Promise<string>;
 
+  /** Returns the total number of messages ever added to the queue. */
   total(): Promise<number>;
 
+  /** Returns the number of messages waiting to be processed. */
   size(): Promise<number>;
 
+  /** Returns the number of messages currently being processed. */
   inFlight(): Promise<number>;
 
+  /** Returns the number of successfully processed messages. */
   done(): Promise<number>;
 }
 
@@ -276,6 +376,22 @@ class MongoDbQueueImpl implements MongoDbQueue {
   }
 }
 
+/**
+ * Creates a new MongoDB-backed message queue.
+ *
+ * @typeParam T - The type of message payloads in this queue
+ * @param db - A MongoDB database instance
+ * @param name - The name of the queue (used as the collection name)
+ * @param options - Optional queue configuration
+ * @param options.visibility - Default visibility timeout in seconds
+ *   (default: 30)
+ * @returns A new queue instance
+ *
+ * @example
+ * ```ts
+ * const queue = mongoDbQueue<MyPayload>(db, 'my-queue', { visibility: 60 });
+ * ```
+ */
 export default function mongoDbQueue<T = unknown>(
   db: Db,
   name: string,
