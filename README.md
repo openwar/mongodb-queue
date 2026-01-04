@@ -1,11 +1,10 @@
 # mongodb-queue
 
-[![NPM version][npm-image]][npm-url] ![Build Status][workflow-ci-url]
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Bun](https://img.shields.io/badge/Bun-Supported-f9f1e1?logo=bun&logoColor=000)](https://bun.sh/)
+[![NPM version][npm-image]][npm-url] [![JSR version][jsr-image]][jsr-url]
+![Build Status][workflow-ci-url]
+[![TypeScript][typescript-image]][typescript-url] [![Bun][bun-image]][bun-url]
 [![license][license-image]][license-url] [![install size][size-image]][size-url]
-[![Dependency Status][librariesio-image]][librariesio-url]
-[![codecov][codecov-image]][codecov-url]
+![dependencies][deps-image] [![codecov][codecov-image]][codecov-url]
 
 A really light-weight way to create queues with a nice API if you're already
 using MongoDB.
@@ -150,9 +149,7 @@ const queue = mongoDbQueue(db, 'queue');
 To pass in options for the queue:
 
 ```ts
-const resizeQueue = mongoDbQueue(db, 'resize-queue', {
-  visibility: 30,
-});
+const resizeQueue = mongoDbQueue(db, 'resize-queue', { visibility: 30 });
 ```
 
 This example shows a queue with a message visibility of 30 seconds.
@@ -447,17 +444,23 @@ and as for the other features, I don't need them and might add them later.
 
 This project it [MIT licensed](./LICENSE).
 
-[npm-image]: https://badge.fury.io/js/%40openwar%2Fmongodb-queue.svg
+[npm-image]: https://img.shields.io/npm/v/@openwar/mongodb-queue
 [npm-url]: https://www.npmjs.com/package/@openwar/mongodb-queue
+[jsr-image]: https://jsr.io/badges/@openwar/mongodb-queue
+[jsr-url]: https://jsr.io/@openwar/mongodb-queue
+[typescript-image]:
+  https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript&logoColor=white
+[typescript-url]: https://www.typescriptlang.org/
+[bun-image]:
+  https://img.shields.io/badge/Bun-Supported-f9f1e1?logo=bun&logoColor=000
+[bun-url]: https://bun.sh/
 [license-image]: https://img.shields.io/npm/l/@openwar/mongodb-queue
 [license-url]: https://www.npmjs.com/package/@openwar/mongodb-queue
 [workflow-ci-url]:
   https://github.com/openwar/mongodb-queue/workflows/CI/badge.svg
 [size-image]: https://packagephobia.com/badge?p=@openwar/mongodb-queue
 [size-url]: https://packagephobia.com/result?p=@openwar/mongodb-queue
-[librariesio-image]:
-  https://img.shields.io/librariesio/release/npm/%40openwar%2Fmongodb-queue
-[librariesio-url]: https://libraries.io/npm/@openwar%2Fmongodb-queue
+[deps-image]: https://img.shields.io/badge/dependencies-0-brightgreen
 [codecov-image]:
   https://codecov.io/gh/openwar/mongodb-queue/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/openwar/mongodb-queue
