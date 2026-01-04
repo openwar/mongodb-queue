@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "isolatedModules": true,
+    "isolatedDeclarations": true,
     "strict": true,
     "noEmit": true,
     "noUnusedLocals": true,
@@ -15,5 +16,5 @@
     "declarationDir": "dist/types",
     "declaration": true,
   },
-  "include": ["src/**/*", "rollup.config.ts"],
+  "include": ["src/**/*"],
 }

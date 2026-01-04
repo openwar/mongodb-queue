@@ -1,14 +1,14 @@
-import { MongoClient } from 'mongodb';
+import { Db, MongoClient } from 'mongodb';
 
 class SetupMongo {
   private _client: MongoClient;
   private _dbName: string;
 
-  get client() {
+  get client(): MongoClient {
     return this._client;
   }
 
-  get db() {
+  get db(): Db {
     return this.client.db(this._dbName);
   }
 
@@ -17,7 +17,7 @@ class SetupMongo {
     this._dbName = dbName;
   }
 
-  async connect() {
+  async connect(): Promise<void> {
     await this._client.connect();
   }
 }

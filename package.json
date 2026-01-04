@@ -1,11 +1,23 @@
 {
   "name": "@openwar/mongodb-queue",
   "version": "6.2.0",
+  "type": "module",
   "description": "A lightweight MongoDB-based message queue with TypeScript support, atomic operations, and message deduplication",
-  "main": "dist/mongodb-queue.js",
-  "module": "dist/mongodb-queue.es.js",
-  "jsnext:main": "dist/mongodb-queue.es.js",
-  "types": "dist/types/mongodb-queue.d.ts",
+  "main": "./dist/mongodb-queue.cjs",
+  "module": "./dist/mongodb-queue.mjs",
+  "types": "./dist/mongodb-queue.d.mts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/mongodb-queue.d.mts",
+        "default": "./dist/mongodb-queue.mjs"
+      },
+      "require": {
+        "types": "./dist/mongodb-queue.d.cts",
+        "default": "./dist/mongodb-queue.cjs"
+      }
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openwar/mongodb-queue.git"
@@ -31,9 +43,7 @@
     "lint": "concurrently 'npm:lint:*'",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:ts": "tsc",
-    "build": "concurrently 'npm:build:*'",
-    "build:types": "tsc -p tsconfig.production.json",
-    "build:js": "rollup --config rollup.config.ts --configPlugin typescript --configImportAttributesKey with",
+    "build": "tsdown",
     "prepare": "concurrently 'npm:prepare:*'",
     "prepare:build": "npm run build",
     "prepare:lefthook": "lefthook install",
@@ -48,18 +58,10 @@
     }
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
-    "@babel/preset-env": "^7.28.5",
-    "@babel/preset-typescript": "^7.28.5",
     "@commitlint/cli": "^20.3.0",
     "@commitlint/config-conventional": "^20.3.0",
-    "@rollup/plugin-babel": "^6.1.0",
-    "@rollup/plugin-commonjs": "^28.0.9",
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-typescript": "^12.3.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.19.3",
-    "builtin-modules": "^4.0.0",
     "commitlint": "^20.3.0",
     "concurrently": "^9.2.1",
     "conventional-changelog-cli": "^5.0.0",
@@ -68,9 +70,10 @@
     "lefthook": "^2.0.0",
     "mongodb": "^5.9.2",
     "prettier": "^3.7.4",
-    "rollup": "^4.54.0",
     "standard-version": "^9.5.0",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
+    "tsdown": "^0.19.0-beta.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.51.0"
   },
