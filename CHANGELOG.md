@@ -4,6 +4,36 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [7.0.0](https://github.com/openwar/mongodb-queue/compare/v6.2.0...v7.0.0) (2026-01-04)
+
+### ⚠ BREAKING CHANGES
+
+- **build:** Output files renamed to .cjs/.mjs extensions
+
+* Migrate from Rollup + Babel to tsdown (Rust-powered bundler)
+* Add proper conditional exports for CJS and ESM consumers
+* Separate type declarations for each format (.d.cts/.d.mts)
+* Enable isolatedDeclarations for faster builds
+* Add "type": "module" to package.json
+
+- drop support for NodeJS 18.x. Active maintenance ended in April 2025. Aligns
+  with `mongodb` driver requirement of NodeJS >=20.19.0.
+- drop support for MongoDB 4.0. Active maintenance ended in April 2022. The
+  `mongodb` npm driver removed pre-4.2 compatibility in v6.20.0.
+
+### Features
+
+- :test_tube: add Bun version matrix to test-bun job
+  ([2fff526](https://github.com/openwar/mongodb-queue/commit/2fff5264ebfcca314b9f5f6b4002f4c3edf9eadf))
+- add peerDep support for mongodb@7.x
+  ([5c6d028](https://github.com/openwar/mongodb-queue/commit/5c6d02888bf2003d79c85da3fffd37fb8cad9967))
+- **build:** :sparkles: add dual CJS/ESM package exports with tsdown
+  ([fdd81a8](https://github.com/openwar/mongodb-queue/commit/fdd81a8744cf01346e362e07db47358379e0dd6d))
+- drop support for MongoDB 4.0
+  ([50254a9](https://github.com/openwar/mongodb-queue/commit/50254a9944c14db6b27b81b05e62520b6d04e7be))
+- drop support for NodeJS 18.x
+  ([6d8b149](https://github.com/openwar/mongodb-queue/commit/6d8b149c24c8b4bf812c108151e6933b04ab9e34))
+
 ## [6.2.0](https://github.com/openwar/mongodb-queue/compare/v6.1.0...v6.2.0) (2024-12-27)
 
 ### Features
