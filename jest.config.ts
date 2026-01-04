@@ -11,10 +11,6 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
-  // Map source imports to built dist for E2E testing
-  moduleNameMapper: {
-    '^(\\.\\./)+mongodb-queue$': '<rootDir>/dist/mongodb-queue.cjs',
-  },
 };
 
 export default config;
