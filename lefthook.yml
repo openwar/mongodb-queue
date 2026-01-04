@@ -1,0 +1,27 @@
+# https://github.com/evilmartians/lefthook
+
+# Format and lint staged files before each commit
+pre-commit:
+  parallel: true
+  commands:
+    prettier:
+      glob: '*.{js,ts,json,md,yml}'
+      run: bunx prettier --write {staged_files}
+      stage_fixed: true
+    eslint:
+      glob: '*.{js,ts}'
+      run: bunx eslint --max-warnings 0 {staged_files}
+    typecheck:
+      run: bun run lint:ts
+
+# Ensure commit messages follow conventional commits format
+commit-msg:
+  commands:
+    commitlint:
+      run: bunx commitlint --edit {1}
+
+# Validate build passes before pushing to remote
+pre-push:
+  commands:
+    build:
+      run: bun run build

@@ -29,14 +29,14 @@
   ],
   "scripts": {
     "lint": "concurrently 'npm:lint:*'",
-    "lint:eslint": "eslint .",
+    "lint:eslint": "eslint --max-warnings 0 .",
     "lint:ts": "tsc",
     "build": "concurrently 'npm:build:*'",
     "build:types": "tsc -p tsconfig.production.json",
     "build:js": "rollup --config rollup.config.ts --configPlugin typescript --configImportAttributesKey with",
     "prepare": "concurrently 'npm:prepare:*'",
     "prepare:build": "npm run build",
-    "prepare:husky": "husky install",
+    "prepare:lefthook": "lefthook install",
     "test": "jest"
   },
   "peerDependencies": {
@@ -64,9 +64,8 @@
     "concurrently": "^9.2.1",
     "conventional-changelog-cli": "^5.0.0",
     "eslint": "^9.39.2",
-    "husky": "^9.1.7",
     "jest": "^30.0.0",
-    "lint-staged": "^15.5.2",
+    "lefthook": "^1.11.13",
     "mongodb": "^5.9.2",
     "prettier": "^3.7.4",
     "rollup": "^4.54.0",
