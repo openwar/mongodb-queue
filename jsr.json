@@ -1,0 +1,8 @@
+{
+  "name": "@openwar/mongodb-queue",
+  "version": "7.0.0",
+  "exports": "./src/mongodb-queue.ts",
+  "publish": {
+    "include": ["src/mongodb-queue.ts", "LICENSE", "README.md"]
+  }
+}
