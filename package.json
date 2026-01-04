@@ -1,6 +1,6 @@
 {
   "name": "@openwar/mongodb-queue",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "type": "module",
   "description": "A lightweight MongoDB-based message queue with TypeScript support, atomic operations, and message deduplication",
   "main": "./dist/mongodb-queue.cjs",

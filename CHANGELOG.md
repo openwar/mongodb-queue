@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version)
 for commit guidelines.
 
+## [7.1.0](https://github.com/openwar/mongodb-queue/compare/v7.0.0...v7.1.0) (2026-01-04)
+
+### Features
+
+- **types:** :sparkles: add JSDoc documentation for exported types and functions
+  ([b2beca1](https://github.com/openwar/mongodb-queue/commit/b2beca1972f091961d0be7627d04aa0656155f80))
+
 ## [7.0.0](https://github.com/openwar/mongodb-queue/compare/v6.2.0...v7.0.0) (2026-01-04)
 
 ### ⚠ BREAKING CHANGES
