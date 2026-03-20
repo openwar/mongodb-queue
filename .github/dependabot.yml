@@ -9,6 +9,9 @@ updates:
       prefix: 'fix'
       prefix-development: 'chore'
       include: scope
+    ignore:
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     assignees:
       - alias-mac
 
