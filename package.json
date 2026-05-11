@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
-    "@commitlint/config-conventional": "^20.5.0",
+    "@commitlint/config-conventional": "^21.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.19.15",
     "commitlint": "^20.5.0",
