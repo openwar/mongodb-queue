@@ -120,7 +120,7 @@ jobs:
           MONGO_DB_NAME: mongodb-queue
 
       - name: 📊 Code Coverage
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           env_vars: NODE,MONGO,MONGOLIB
@@ -171,7 +171,7 @@ jobs:
           MONGO_DB_NAME: mongodb-queue
 
       - name: 📊 Code Coverage
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           env_vars: BUN,MONGO,MONGOLIB
